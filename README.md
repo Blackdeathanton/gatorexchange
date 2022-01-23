@@ -17,6 +17,16 @@ The platform supports the following functionalities depending upon the type of t
 4. Can share a question
 5. Can view related questions based on tag
 
+### Signed-up users:
+1. Can post/ask questions to the gator community
+2. Can answer or give replies to questions posted
+3. Can edit the posted answer
+4. Can add comments to questions and/or answers
+5. Upvote and Downvote answers
+6. Can view their profile 
+7. Can follow tags and other users
+
+
 ## Tech stack
 * Frontend: React
 * Backend: Go
