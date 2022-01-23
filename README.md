@@ -7,9 +7,12 @@ The Frontend for this application is developed using ReactJS framework and the B
 
 ---
 
-## Team Members
+## Tech stack
+* Frontend: React
+* Backend: Go
+* Database: PostgreSQL, MongoDB
 
- - Vikash Kasipandi
- - Venkatesh Prasad Ramani
- - Harini Srinivasan
- - Liju Anton Joseph Antony Britto
+
+
+
+
