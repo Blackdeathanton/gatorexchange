@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import AllQuestions from './AllQuestions';
+import Question from './Question';
 import "./css/AllQuestionsView.css";
 
 export default function AllQuestionsView() {
@@ -18,11 +18,11 @@ export default function AllQuestionsView() {
                 </div>
                 <div className="all-questions-view-content">
                     <div className="question-view-content">
-                        <AllQuestions />
-                        <AllQuestions />
-                        <AllQuestions />
-                        <AllQuestions />
-                        <AllQuestions />
+                        <Question />
+                        <Question />
+                        <Question />
+                        <Question />
+                        <Question />
                     </div>
                 </div>
             </div>
