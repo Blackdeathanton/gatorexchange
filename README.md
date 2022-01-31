@@ -7,7 +7,7 @@ The Frontend for this application is developed using ReactJS framework and the B
 
 ---
 
-## Functionalities
+## 🚀 Functionalities
 
 The platform supports the following functionalities depending upon the type of the user:
 ### Guest users:
@@ -27,7 +27,7 @@ The platform supports the following functionalities depending upon the type of t
 7. Can follow tags and other users
 
 
-## Tech stack
+## 💻 Tech stack
 * Frontend: React
 * Backend: Go
 * Database: PostgreSQL, MongoDB
