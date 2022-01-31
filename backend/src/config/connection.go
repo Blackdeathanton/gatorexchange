@@ -32,7 +32,7 @@ func CreateConn() *mongo.Client {
 	return mClient
 }
 
-var db *mongo.Client = CreateConn()
+var MClient *mongo.Client = CreateConn()
 
 func GetCollection(mClient *mongo.Client, cN string) *mongo.Collection {
 	c := mClient.Database("golangAPI").Collection(cN)
