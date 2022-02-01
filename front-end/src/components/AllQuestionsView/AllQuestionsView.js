@@ -9,7 +9,7 @@ export default function AllQuestionsView() {
             <div className="all-questions-view-container">
                 <div className="all-questions-view-top">
                     <h2>All Questions</h2>
-                    <Link>
+                    <Link to='/ask-question'>
                         <button>Ask questions</button>
                     </Link>
                 </div>
