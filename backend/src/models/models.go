@@ -15,11 +15,11 @@ type Question struct {
 	Tags        []string           `json:"tags,omitempty" validate:"required"`
 	Answers     []Answer           `json:"answers,omitempty" validate:"required"`
 	Comments    []Comment          `json:"comments,omitempty" validate:"required"`
-	Upvotes     int                `json:"upvotes,omitempty" validate:"required"`
-	Downvotes   int                `json:"downvotes,omitempty" validate:"required"`
-	Views       int                `json:"views,omitempty" validate:"required"`
-	CreatedTime time.Time          `json:"created_time,omitempty" validate:"required"`
-	UpdatedTime time.Time          `json:"updated_time,,omitempty" validate:"required"`
+	Upvotes     int                `json:"upvotes,omitempty"`
+	Downvotes   int                `json:"downvotes,omitempty"`
+	Views       int                `json:"views,omitempty"`
+	CreatedTime time.Time          `json:"created_time,omitempty"`
+	UpdatedTime time.Time          `json:"updated_time,,omitempty"`
 }
 
 type Answer struct {

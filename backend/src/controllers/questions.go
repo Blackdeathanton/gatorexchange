@@ -4,6 +4,7 @@ import (
 	"backend-v1/src/config"
 	"backend-v1/src/models"
 	"context"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -22,6 +23,7 @@ func AddQuestion() gin.HandlerFunc {
 		var q models.Question
 
 		defer cancel()
+		fmt.Println(q)
 
 		if err := con.BindJSON(&q); err != nil {
 			con.JSON(http.StatusBadRequest, gin.H{"error": err})
@@ -29,7 +31,7 @@ func AddQuestion() gin.HandlerFunc {
 		}
 		valErr := validate.Struct(&q)
 		if valErr != nil {
-			con.JSON(http.StatusBadRequest, gin.H{"error": valErr})
+			con.JSON(http.StatusBadRequest, gin.H{"error": valErr.Error()})
 			return
 		}
 
@@ -45,8 +47,8 @@ func AddQuestion() gin.HandlerFunc {
 			Upvotes:     q.Upvotes,
 			Downvotes:   q.Downvotes,
 			Views:       q.Views,
-			CreatedTime: q.CreatedTime,
-			UpdatedTime: q.UpdatedTime,
+			CreatedTime: time.Now(),
+			UpdatedTime: time.Now(),
 		}
 
 		qu, err := questionCollection.InsertOne(c, newQ)
