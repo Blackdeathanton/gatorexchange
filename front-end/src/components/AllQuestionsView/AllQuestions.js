@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Question from './Question';
-import "./css/AllQuestionsView.css";
+import QuestionCard from './QuestionCard';
+import "./css/AllQuestions.css";
 
-export default function AllQuestionsView() {
+export default function AllQuestions() {
     return (
         <div className="all-questions-view">
             <div className="all-questions-view-container">
@@ -18,11 +18,11 @@ export default function AllQuestionsView() {
                 </div>
                 <div className="all-questions-view-content">
                     <div className="question-view-content">
-                        <Question />
-                        <Question />
-                        <Question />
-                        <Question />
-                        <Question />
+                        <QuestionCard />
+                        <QuestionCard />
+                        <QuestionCard />
+                        <QuestionCard />
+                        <QuestionCard />
                     </div>
                 </div>
             </div>

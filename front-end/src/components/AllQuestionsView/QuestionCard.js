@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import "./css/Question.css";
+import "./css/QuestionCard.css";
 
-export default function Question() {
+export default function QuestionCard() {
     return (
         <div className="question">
             <div className="question-container">

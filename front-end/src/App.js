@@ -1,6 +1,6 @@
 import React from 'react';
 import Appbar from './components/Appbar/Appbar';
-import AllQuestionsView from './components/AllQuestionsView/AllQuestionsView';
+import AllQuestionsView from './components/AllQuestionsView';
 import AskQuestion from './components/AskQuestion/AskQuestion';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
