@@ -75,16 +75,27 @@ func GetAllQuestions() gin.HandlerFunc {
 			con.JSON(http.StatusInternalServerError, gin.H{"error reading data": err})
 		}
 
-		// var question bson.M
-		// if err := questionCollection.FindOne(ctx, bson.M{}).Decode(&question); err != nil {
-		// }
-		// fmt.Println(question)
-
-		// json, err := json.Marshal(questions)
-		// if err != nil {
-		// 	con.JSON(http.StatusInternalServerError, gin.H{"error parsing JSON": err})
-		// }
-
 		con.JSON(http.StatusOK, questions)
+	}
+}
+
+func GetQuestionById() gin.HandlerFunc {
+	return func(con *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+
+		defer cancel()
+
+		id := con.Param("id")
+		objId, err := primitive.ObjectIDFromHex(id)
+		if err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+		}
+
+		var question bson.M
+		if err := questionCollection.FindOne(ctx, bson.M{"id":objId}).Decode(&question); err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		}
+
+		con.JSON(http.StatusOK, question)
 	}
 }
