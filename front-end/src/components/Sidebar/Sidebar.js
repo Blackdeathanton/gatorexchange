@@ -16,9 +16,6 @@ export default function Sidebar(){
                     <div className="sidebar-option">
                         <Link>Tags</Link>
                     </div>
-                    <div className="sidebar-option">
-                        <Link>Users</Link>
-                    </div>
                 </div>
             </div>
         </div>
