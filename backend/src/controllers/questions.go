@@ -9,6 +9,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -58,12 +59,32 @@ func AddQuestion() gin.HandlerFunc {
 	}
 }
 
-// func GetAllQuestions() gin.HandlerFunc {
-// 	return func(con *gin.Context) {
-// 		c, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-// 		var Questions []models.Question
+func GetAllQuestions() gin.HandlerFunc {
+	return func(con *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
-// 		defer cancel()
-// 		if err :
-// 	}
-// }
+		defer cancel()
+
+		cursor, err := questionCollection.Find(ctx, bson.M{})
+		if err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+		}
+
+		var questions []bson.M
+		if err = cursor.All(ctx, &questions); err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error reading data": err})
+		}
+
+		// var question bson.M
+		// if err := questionCollection.FindOne(ctx, bson.M{}).Decode(&question); err != nil {
+		// }
+		// fmt.Println(question)
+
+		// json, err := json.Marshal(questions)
+		// if err != nil {
+		// 	con.JSON(http.StatusInternalServerError, gin.H{"error parsing JSON": err})
+		// }
+
+		con.JSON(http.StatusOK, questions)
+	}
+}
