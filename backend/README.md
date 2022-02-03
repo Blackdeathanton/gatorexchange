@@ -48,5 +48,7 @@ The below mentioned api are open endpoints and do not require authentication
 
 ## Technology Stack
 - Server: Go (Golang)
-- Datbase: MongoDB
+- Database: MongoDB
 - Frameworks: Gin
+
+![Go](https://img.shields.io/badge/go-%2300ADD8.svg?style=for-the-badge&logo=go&logoColor=white) ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
