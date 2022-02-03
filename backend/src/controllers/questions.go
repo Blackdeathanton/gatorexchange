@@ -10,6 +10,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -60,12 +61,43 @@ func AddQuestion() gin.HandlerFunc {
 	}
 }
 
-// func GetAllQuestions() gin.HandlerFunc {
-// 	return func(con *gin.Context) {
-// 		c, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-// 		var Questions []models.Question
+func GetAllQuestions() gin.HandlerFunc {
+	return func(con *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
-// 		defer cancel()
-// 		if err :
-// 	}
-// }
+		defer cancel()
+
+		cursor, err := questionCollection.Find(ctx, bson.M{})
+		if err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+		}
+
+		var questions []bson.M
+		if err = cursor.All(ctx, &questions); err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error reading data": err})
+		}
+
+		con.JSON(http.StatusOK, questions)
+	}
+}
+
+func GetQuestionById() gin.HandlerFunc {
+	return func(con *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+
+		defer cancel()
+
+		id := con.Param("id")
+		objId, err := primitive.ObjectIDFromHex(id)
+		if err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+		}
+
+		var question bson.M
+		if err := questionCollection.FindOne(ctx, bson.M{"id":objId}).Decode(&question); err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		}
+
+		con.JSON(http.StatusOK, question)
+	}
+}

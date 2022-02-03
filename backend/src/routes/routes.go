@@ -23,11 +23,11 @@ func RunAPI(address string) error {
 			})
 		})
 		// GetAllQuestions()
-		// v1.GET("/questions", h.GetAllQuestions)
-		// // GetQuestionById()
-		// v1.GET("/questions/:id", h.GetQuestionById)
+		v1.GET("/questions", controllers.GetAllQuestions())
 		// AddQuestion()
 		v1.POST("/questions", controllers.AddQuestion())
+		// GetQuestionById()
+		v1.GET("/questions/:id", controllers.GetQuestionById())
 	}
 
 	return rest.Run(address)
