@@ -37,13 +37,13 @@ GatorExchange is an application that serves as a platform for users to ask and a
 The below mentioned api are open endpoints and do not require authentication
 
 - Add Question : `POST /questions/`
-A POST api used to add a question posted by a guest/user to the questions database via the server
+  * A POST api used to add a question posted by a guest/user to the questions database via the server
 
 - Fetch All Questions : `GET /questions/`
-A GET api the returns all the list of questions posted by guests/users in the questions database to the client via the server
+  * A GET api the returns all the list of questions posted by guests/users in the questions database to the client via the server
 
-- `GET /questions/:id`
-A GET api that returns a single question, clicked on by the user, with a particular id posted by a guest/user, in the questions database to the client via the server
+- Fetch A Particular Question By ID : `GET /questions/:id`
+  * A GET api that returns a single question, clicked on by the user, with a particular id posted by a guest/user, in the questions database to the client via the server
 
 
 ## Technology Stack
