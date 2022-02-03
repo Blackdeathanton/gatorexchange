@@ -2,6 +2,8 @@
 
 ## Table of Contents
 
+- [Description](#description)
+- [Functionalities](#functionalities)
 - [Configuration](#configuration)
 - [Steps to Run](#steps-to-run)
 - [API Details](#api-details)
