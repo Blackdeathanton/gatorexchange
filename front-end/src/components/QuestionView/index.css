@@ -1,16 +1,3 @@
-/* .question-view{
-    display: flex;
-    padding: 30px 10px;
-    flex: 0.75;
-    flex-direction: column;
-}
-
-.question-view-container{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-} */
-
 .question-view {
     min-width: fit-content;
     display: flex;

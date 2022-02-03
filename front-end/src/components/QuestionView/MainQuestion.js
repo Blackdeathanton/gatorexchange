@@ -25,9 +25,9 @@ function MainQuestion() {
                    <div className="question-body-container">
                        <div className="question-body-left">
                             <div className="all-options">
-                                <p className="arrow">▲</p>
+                                <Link><p className="arrow">▲</p></Link>
                                 <p className="arrow">0</p>
-                                <p className="arrow">▼</p>
+                                <Link><p className="arrow">▼</p></Link>
                            </div>
                        </div>
                        <div className="question-answer">
@@ -70,9 +70,9 @@ For instance, I am in localhost/joblist and everything is fine because I arrived
                    <div className="question-body-container">
                         <div className="question-body-left">
                            <div className="all-options">
-                                <p className="arrow">▲</p>
+                                <Link><p className="arrow">▲</p></Link>
                                 <p className="arrow">0</p>
-                                <p className="arrow">▼</p>
+                                <Link><p className="arrow">▼</p></Link>
                            </div>
                        </div>
                        <div className="question-answer">
