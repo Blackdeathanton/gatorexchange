@@ -23,7 +23,7 @@ export default function QuestionCard() {
                     </div>
                 </div>
                 <div className="question-answer">
-                    <Link>Q: Programmatically navigate using React router</Link>
+                    <Link to="/question">Q: Programmatically navigate using React router</Link>
                     <div style={{
                         width: "90%",
                     }}>

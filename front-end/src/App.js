@@ -3,6 +3,7 @@ import Appbar from './components/Appbar/Appbar';
 import AllQuestionsView from './components/AllQuestionsView';
 import AskQuestion from './components/AskQuestion/AskQuestion';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import MainQuestion from './components/QuestionView/MainQuestion';
 
 function App() {
     return (
@@ -11,6 +12,7 @@ function App() {
                 <Appbar />
                 <Switch>
                     <Route exact path='/' component = {AllQuestionsView}/>
+                    <Route exact path='/question' component = {MainQuestion}/>
                     <Route exact path='/ask-question' component = {AskQuestion}/>
                 </Switch>
             </Router>
