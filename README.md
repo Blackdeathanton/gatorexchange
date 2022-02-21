@@ -7,6 +7,12 @@ The Frontend for this application is developed using ReactJS framework and the B
 
 ---
 
+## Team Members
+1. Vikash Pandian (vikashpandian)
+2. Venkatesh Prasad Ramani (prasa-dd-vp)
+3. Harini Srinivasan (harini-srinivasan)
+4. Liju Anton Joseph Antony Britto (Blackdeathanton)
+
 ## 🚀 Functionalities
 
 The platform supports the following functionalities depending upon the type of the user:
