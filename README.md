@@ -1,5 +1,7 @@
 # GatorExchange
 
+[![gatorexchange](https://github.com/Blackdeathanton/gatorexchange/actions/workflows/main.yml/badge.svg)](https://github.com/Blackdeathanton/gatorexchange/actions/workflows/main.yml)
+
 ## Description
 ---
 GatorExchange is an application that serves as a platform for users to ask and answer questions, through membership and active participation, to vote questions and answers up or down similar to Reddit and edit questions and answers in a fashion similar to a wiki. 
