@@ -11,6 +11,9 @@ import (
 	This method serves as the entry point of the RESTful API
 */
 func RunAPI(address string) error {
+	// Set Gin to Production Mode
+	gin.SetMode(gin.ReleaseMode)
+
 	rest := gin.Default()
 	config.CreateConn()
 
