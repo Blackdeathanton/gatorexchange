@@ -25,11 +25,11 @@ export default function AskQuestion() {
         if (title !== "" && body !== "") {
             setLoading(true)
             const bodyJSON = {
-                Author: "author_name",
-                Email: "author@eamil.com",
-                Title: title,
-                Body: body,
-                Tags: tags
+                author: "author_name",
+                author_email: "author@eamil.com",
+                title: title,
+                body: body,
+                tags: tags
             };
             await axios
                 .post("/api/v1/questions", bodyJSON)
