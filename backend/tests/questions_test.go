@@ -35,7 +35,7 @@ func TestRandomAPIStatusFailure(t *testing.T) {
 
 	r.GET("/questions", controllers.GetAllQuestions())
 
-	req, _ := http.NewRequest("GET", "/questions", nil)
+	req, _ := http.NewRequest("GET", "/question", nil)
 
 	testHttpRequest(t, r, req, func(w *httptest.ResponseRecorder) bool {
 		s := w.Code == http.StatusNotFound
@@ -56,6 +56,24 @@ func TestGetQuestionByIdStatusSuccess(t *testing.T) {
 
 	testHttpRequest(t, r, req, func(w *httptest.ResponseRecorder) bool {
 		s := w.Code == http.StatusOK
+		return s
+	})
+}
+
+/*
+	This function is responsible for checking whether
+	GetQuestionById API returns a failure status code
+	when a wrong question ID is entered.
+*/
+func TestGetQuestionByIdStatusFailure(t *testing.T) {
+	r := getRouter()
+	config.CreateConn()
+
+	r.GET("/questions/:id", controllers.GetQuestionById())
+	req, _ := http.NewRequest("GET", "/questions/61f8501e5a82885c6ef0de", nil)
+
+	testHttpRequest(t, r, req, func(w *httptest.ResponseRecorder) bool {
+		s := w.Code == http.StatusInternalServerError
 		return s
 	})
 }
