@@ -30,5 +30,12 @@ func RunAPI(address string) error {
 		v1.GET("/questions/:id", controllers.GetQuestionById())
 	}
 
+	// v2 APIs
+	v2 := rest.Group("/api/v2")
+	{
+		// Search API
+		v2.GET("/search", controllers.SearchQuestions())
+	}
+
 	return rest.Run(address)
 }
