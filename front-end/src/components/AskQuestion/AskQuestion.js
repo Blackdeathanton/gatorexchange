@@ -26,7 +26,7 @@ export default function AskQuestion() {
             setLoading(true)
             const bodyJSON = {
                 author: "author_name",
-                author_email: "author@eamil.com",
+                author_email: "author@email.com",
                 title: title,
                 body: body,
                 tags: tags
