@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import QuestionCard from './QuestionCard';
 import "./css/AllQuestions.css";
 
-export default function AllQuestions() {
+export default function AllQuestions({questions}) {
     return (
         <div className="all-questions-view">
             <div className="all-questions-view-container">
@@ -14,16 +14,14 @@ export default function AllQuestions() {
                     </Link>
                 </div>
                 <div className="all-questions-view-options">
-                    <p> No. questions</p>
+                    <p>{questions && questions.length} Questions</p>
                 </div>
-                <div className="all-questions-view-content">
-                    <div className="question-view-content">
-                        <QuestionCard />
-                        <QuestionCard />
-                        <QuestionCard />
-                        <QuestionCard />
-                        <QuestionCard />
-                    </div>
+                <div className="all-questions-view-content">{
+                    questions.map((question, index) => (
+                        <div className="question-view-content" key={index}>
+                            <QuestionCard question={question}/>
+                        </div>
+                    ))}                    
                 </div>
             </div>
         </div>

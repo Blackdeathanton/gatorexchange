@@ -11,7 +11,7 @@ function Appbar() {
                     <Link to='/'>
                         <div className="header-left-img-container">
                             <img src = {require('./img/gator.png')} alt="logo"/>
-                            <text>GatorExchange</text>
+                            <span>GatorExchange</span>
                         </div>
                     </Link>
                     
