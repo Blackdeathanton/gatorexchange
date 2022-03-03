@@ -36,7 +36,7 @@ header{
     vertical-align: bottom;
 }
 
-.header-left-img-container > text{
+.header-left-img-container > span{
     font-family: fantasy;
     margin-left: 3px;
     cursor: pointer;

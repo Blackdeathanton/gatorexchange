@@ -1,45 +1,50 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import "./css/QuestionCard.css";
+import ReactHtmlParser from 'react-html-parser';
 
-export default function QuestionCard() {
+export default function QuestionCard({question}) {
+    function truncate(string, n) {
+        return (string?.length > n) ? string.substr(0, n-1) + "..." : string;
+    }
+    
     return (
         <div className="question">
             <div className="question-container">
                 <div className="question-left">
                     <div className="all-options">
                         <div className="all-option">
-                            <p>1950</p>
+                            <p>{question?.upvotes}</p>
                             <span>Votes</span>
                         </div>
                         <div className="all-option">
-                            <p>1665</p>
+                            <p>{question?.answers.length}</p>
                             <span>Answers</span>
                         </div>
                         <div className="all-option">
-                            <p>1276</p>
+                            <p>{question?.views}</p>
                             <span>Views</span>
                         </div>
                     </div>
                 </div>
                 <div className="question-answer">
-                    <Link to="/question">Q: Programmatically navigate using React router</Link>
+                    <Link to={"/question"}>{question?.title}</Link>
                     <div style={{
                         width: "90%",
                     }}>
-                        <div>
-                        With react-router I can use the Link element to create links which are natively handled by react router. I see internally it calls this.context.transitionTo(...). I want to do a navigation. …
-                        </div>
+                        <div>{ReactHtmlParser(truncate(question?.body, 200))}</div>
                     </div>
                     <div style={{
-                        display: "flex",
-                    }}>
-                        <span className="tags">reactjs</span>
-                        <span className="tags">javascript</span>
-                        <span className="tags">jsx</span>
+                            display: "flex",
+                        }}>
+                        {question?.tags.map((tag) => (
+                            <>
+                                <span className="tags">{tag}</span>
+                            </>
+                        ))}
                     </div>
                     <div className="timestamp">
-                        <small>Timestamp</small>
+                        <small>{new Date(question?.createdtime).toLocaleString()}</small>
                     </div>
                 </div>
             </div>
