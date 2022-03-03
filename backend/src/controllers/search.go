@@ -28,7 +28,7 @@ func SearchQuestions() gin.HandlerFunc {
 				bson.M{"body": bson.M{"$regex": query_regex}},
 			},
 		}
-		projection := bson.D{{"answers", 0}}
+		projection := bson.M{"answers": 0, "comments": 0}
 
 		cursor, err := questionCollection.Find(ctx, filter, options.Find().SetProjection(projection))
 		if err != nil {
