@@ -54,12 +54,12 @@ func AddQuestion() gin.HandlerFunc {
 			UpdatedTime: time.Now(),
 		}
 
-		qu, err := questionCollection.InsertOne(c, newQ)
+		_, err := questionCollection.InsertOne(c, newQ)
 		if err != nil {
 			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
 		}
 
-		con.JSON(http.StatusCreated, qu)
+		con.JSON(http.StatusCreated, gin.H{"InsertedID": newQ.Id})
 	}
 }
 
