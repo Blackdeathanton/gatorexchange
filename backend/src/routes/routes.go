@@ -35,6 +35,12 @@ func RunAPI(address string) error {
 	{
 		// Search API
 		v2.GET("/search", controllers.SearchQuestions())
+
+		// Add Answer API
+		v2.POST("/answers", controllers.AddAnswer())
+		
+		// Add Comment API
+		v2.POST("/comments", controllers.AddComment())
 	}
 
 	return rest.Run(address)
