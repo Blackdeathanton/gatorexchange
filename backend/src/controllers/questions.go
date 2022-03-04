@@ -4,7 +4,6 @@ import (
 	"backend-v1/src/config"
 	"backend-v1/src/models"
 	"context"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -18,13 +17,16 @@ import (
 var questionCollection *mongo.Collection = config.GetCollection(config.MClient, "questions")
 var validate = validator.New()
 
+/*
+	This API is responsible for adding a new question
+	to the database.
+*/
 func AddQuestion() gin.HandlerFunc {
 	return func(con *gin.Context) {
 		c, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		var q models.Question
 
 		defer cancel()
-		fmt.Println(q)
 
 		if err := con.BindJSON(&q); err != nil {
 			con.JSON(http.StatusBadRequest, gin.H{"error": err})
@@ -61,6 +63,10 @@ func AddQuestion() gin.HandlerFunc {
 	}
 }
 
+/*
+	This API is responsible for getting all questions
+	from the database.
+*/
 func GetAllQuestions() gin.HandlerFunc {
 	return func(con *gin.Context) {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -83,6 +89,10 @@ func GetAllQuestions() gin.HandlerFunc {
 	}
 }
 
+/*
+	This API is responsible for getting all question
+	with the specific ID from the database.
+*/
 func GetQuestionById() gin.HandlerFunc {
 	return func(con *gin.Context) {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -103,5 +113,33 @@ func GetQuestionById() gin.HandlerFunc {
 		}
 
 		con.JSON(http.StatusOK, question)
+	}
+}
+
+/*
+	This API is responsible for deleting the question
+	with a specific ID from the database.
+*/
+func DeleteQuestionById() gin.HandlerFunc {
+	return func(con *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		id := con.Param("id")
+
+		defer cancel()
+
+		objId, _ := primitive.ObjectIDFromHex(id)
+		result, err := questionCollection.DeleteOne(ctx, bson.M{"id": objId})
+
+		if err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			return
+		}
+
+		if result.DeletedCount < 1 {
+			con.JSON(http.StatusNotFound, gin.H{"error": "Question with the ID is not found"})
+			return
+		}
+
+		con.JSON(http.StatusOK, gin.H{"status": "Question deleted successfully"})
 	}
 }

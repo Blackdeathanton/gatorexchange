@@ -36,12 +36,12 @@ func RunAPI(address string) error {
 	// v2 APIs
 	v2 := rest.Group("/api/v2")
 	{
+		// Delete a question with an ID
+		v2.DELETE("/questions/:id", controllers.DeleteQuestionById())
 		// Search API
 		v2.GET("/search", controllers.SearchQuestions())
-
 		// Add Answer API
 		v2.POST("/answers", controllers.AddAnswer())
-		
 		// Add Comment API
 		v2.POST("/comments", controllers.AddComment())
 	}
