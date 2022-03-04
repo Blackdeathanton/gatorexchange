@@ -70,11 +70,13 @@ func GetAllQuestions() gin.HandlerFunc {
 		cursor, err := questionCollection.Find(ctx, bson.M{})
 		if err != nil {
 			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			return
 		}
 
 		var questions []bson.M
 		if err = cursor.All(ctx, &questions); err != nil {
 			con.JSON(http.StatusInternalServerError, gin.H{"error reading data": err})
+			return
 		}
 
 		con.JSON(http.StatusOK, questions)
@@ -91,11 +93,13 @@ func GetQuestionById() gin.HandlerFunc {
 		objId, err := primitive.ObjectIDFromHex(id)
 		if err != nil {
 			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			return
 		}
 
 		var question bson.M
 		if err := questionCollection.FindOne(ctx, bson.M{"id":objId}).Decode(&question); err != nil {
 			con.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
 		}
 
 		con.JSON(http.StatusOK, question)
