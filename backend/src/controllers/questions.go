@@ -43,8 +43,8 @@ func AddQuestion() gin.HandlerFunc {
 			Title:       q.Title,
 			Body:        q.Body,
 			Tags:        q.Tags,
-			Answers:     q.Answers,
-			Comments:    q.Comments,
+			Answers:     []models.Answer{},
+			Comments:    []models.Comment{},
 			Upvotes:     q.Upvotes,
 			Downvotes:   q.Downvotes,
 			Views:       q.Views,
@@ -97,7 +97,7 @@ func GetQuestionById() gin.HandlerFunc {
 		}
 
 		var question bson.M
-		if err := questionCollection.FindOne(ctx, bson.M{"id":objId}).Decode(&question); err != nil {
+		if err := questionCollection.FindOne(ctx, bson.M{"id": objId}).Decode(&question); err != nil {
 			con.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
