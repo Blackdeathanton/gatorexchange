@@ -45,4 +45,5 @@ jobs:
           run: |
             cd backend/tests
             echo "$ENV_FILE" >> .env
-            go test routes_test.go questions_test.go main_test.go -v 
+            cd ..
+            go test ./tests/...
