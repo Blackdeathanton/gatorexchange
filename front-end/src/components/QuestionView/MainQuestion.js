@@ -26,7 +26,6 @@ function MainQuestion() {
                 question_id: id,
                 body:  answer,
                 author: "default",
-                comments: []
             }
             const config = {
                 header: {
