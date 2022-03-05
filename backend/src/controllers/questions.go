@@ -12,6 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 var questionCollection *mongo.Collection = config.GetCollection(config.MClient, "questions")
@@ -107,7 +108,11 @@ func GetQuestionById() gin.HandlerFunc {
 		}
 
 		var question bson.M
-		if err := questionCollection.FindOne(ctx, bson.M{"id": objId}).Decode(&question); err != nil {
+		var filter = bson.M{"id": objId}
+		var update = bson.M{"$inc": bson.M{"views": 1}}
+		var opts = options.FindOneAndUpdate().SetReturnDocument(options.After)
+		
+		if err := questionCollection.FindOneAndUpdate(ctx, filter, update, opts).Decode(&question); err != nil {
 			con.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
