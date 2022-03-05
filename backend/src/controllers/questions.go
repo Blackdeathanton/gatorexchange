@@ -12,6 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 var questionCollection *mongo.Collection = config.GetCollection(config.MClient, "questions")
@@ -107,7 +108,11 @@ func GetQuestionById() gin.HandlerFunc {
 		}
 
 		var question bson.M
-		if err := questionCollection.FindOne(ctx, bson.M{"id": objId}).Decode(&question); err != nil {
+		var filter = bson.M{"id": objId}
+		var update = bson.M{"$inc": bson.M{"views": 1}}
+		var opts = options.FindOneAndUpdate().SetReturnDocument(options.After)
+
+		if err := questionCollection.FindOneAndUpdate(ctx, filter, update, opts).Decode(&question); err != nil {
 			con.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
@@ -141,5 +146,43 @@ func DeleteQuestionById() gin.HandlerFunc {
 		}
 
 		con.JSON(http.StatusOK, gin.H{"status": "Question deleted successfully"})
+	}
+}
+
+/*
+	This API is responsible for updating the votes 
+	of a question with a specific ID in the database.
+*/
+func UpdateVotes() gin.HandlerFunc {
+	return func(con *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		id := con.Param("id")
+		vote := con.Param("vote")
+		defer cancel()
+		
+		questionId, err := primitive.ObjectIDFromHex(id)
+		if err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			return
+		}
+		
+		var filter = bson.M{"id": questionId}
+		var increment bson.M
+		if vote == "upvote" {
+			increment = bson.M{"upvotes": 1}
+		} else if vote == "downvote" {
+			increment = bson.M{"downvotes": 1}
+		} else {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			return
+		}
+		var update = bson.M{"$inc": increment}
+		_, err = questionCollection.UpdateOne(ctx, filter, update)
+		if err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			return
+		}
+
+		con.JSON(http.StatusCreated, gin.H{"status": "Vote updated successfully"})
 	}
 }
