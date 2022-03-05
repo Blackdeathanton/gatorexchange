@@ -44,6 +44,8 @@ func RunAPI(address string) error {
 		v2.POST("/answers", controllers.AddAnswer())
 		// Add Comment API
 		v2.POST("/comments", controllers.AddComment())
+		// Update Upvote and Downvote count API
+		v2.POST("/question/:id/vote/:vote", controllers.UpdateVotes())
 	}
 
 	return rest.Run(address)
