@@ -24,3 +24,4 @@
 
  - Continuous Integration Pipeline has been setup using Github Actions
  - Search Questions API has been developed (Backend)
+ - Option to add comments and answers to a question has been developed(Frontend)
