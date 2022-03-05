@@ -5,8 +5,11 @@
 ### 1. Integration of front and backend
 
  - Backend APIs has been developed and exposed to be used by the Frontend.
+ - Every component in the frontend has been integrated with backend APIs.
  
 ### 2. Cypress and Unit testing
+
+ - All frontend components have been tested for their proper functioning using Cypress test framework.
 
 ### 3. Unit testing backend
 
