@@ -31,7 +31,7 @@ type Answer struct {
 	Downvotes   int                `json:"downvotes,omitempty"`
 	CreatedTime time.Time          `json:"created_time,omitempty"`
 	UpdatedTime time.Time          `json:"updated_time,omitempty"`
-	Comments    []Comment          `json:"comments,omitempty" validate:"required"`
+	Comments    []Comment          `json:"comments,omitempty"`
 }
 
 type Comment struct {
