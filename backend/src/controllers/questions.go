@@ -4,7 +4,6 @@ import (
 	"backend-v1/src/config"
 	"backend-v1/src/models"
 	"context"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -18,13 +17,16 @@ import (
 var questionCollection *mongo.Collection = config.GetCollection(config.MClient, "questions")
 var validate = validator.New()
 
+/*
+	This API is responsible for adding a new question
+	to the database.
+*/
 func AddQuestion() gin.HandlerFunc {
 	return func(con *gin.Context) {
 		c, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		var q models.Question
 
 		defer cancel()
-		fmt.Println(q)
 
 		if err := con.BindJSON(&q); err != nil {
 			con.JSON(http.StatusBadRequest, gin.H{"error": err})
@@ -43,8 +45,8 @@ func AddQuestion() gin.HandlerFunc {
 			Title:       q.Title,
 			Body:        q.Body,
 			Tags:        q.Tags,
-			Answers:     q.Answers,
-			Comments:    q.Comments,
+			Answers:     []models.Answer{},
+			Comments:    []models.Comment{},
 			Upvotes:     q.Upvotes,
 			Downvotes:   q.Downvotes,
 			Views:       q.Views,
@@ -52,15 +54,19 @@ func AddQuestion() gin.HandlerFunc {
 			UpdatedTime: time.Now(),
 		}
 
-		qu, err := questionCollection.InsertOne(c, newQ)
+		_, err := questionCollection.InsertOne(c, newQ)
 		if err != nil {
 			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
 		}
 
-		con.JSON(http.StatusCreated, qu)
+		con.JSON(http.StatusCreated, gin.H{"InsertedID": newQ.Id})
 	}
 }
 
+/*
+	This API is responsible for getting all questions
+	from the database.
+*/
 func GetAllQuestions() gin.HandlerFunc {
 	return func(con *gin.Context) {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -83,6 +89,10 @@ func GetAllQuestions() gin.HandlerFunc {
 	}
 }
 
+/*
+	This API is responsible for getting all question
+	with the specific ID from the database.
+*/
 func GetQuestionById() gin.HandlerFunc {
 	return func(con *gin.Context) {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -97,11 +107,39 @@ func GetQuestionById() gin.HandlerFunc {
 		}
 
 		var question bson.M
-		if err := questionCollection.FindOne(ctx, bson.M{"id":objId}).Decode(&question); err != nil {
+		if err := questionCollection.FindOne(ctx, bson.M{"id": objId}).Decode(&question); err != nil {
 			con.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
 
 		con.JSON(http.StatusOK, question)
+	}
+}
+
+/*
+	This API is responsible for deleting the question
+	with a specific ID from the database.
+*/
+func DeleteQuestionById() gin.HandlerFunc {
+	return func(con *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		id := con.Param("id")
+
+		defer cancel()
+
+		objId, _ := primitive.ObjectIDFromHex(id)
+		result, err := questionCollection.DeleteOne(ctx, bson.M{"id": objId})
+
+		if err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			return
+		}
+
+		if result.DeletedCount < 1 {
+			con.JSON(http.StatusNotFound, gin.H{"error": "Question with the ID is not found"})
+			return
+		}
+
+		con.JSON(http.StatusOK, gin.H{"status": "Question deleted successfully"})
 	}
 }

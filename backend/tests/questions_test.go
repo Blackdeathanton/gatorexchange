@@ -4,6 +4,7 @@ import (
 	"backend-v1/src/config"
 	"backend-v1/src/controllers"
 	"backend-v1/src/models"
+	"bytes"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
@@ -130,6 +131,54 @@ func TestGetQuestionByIdStatusFailure(t *testing.T) {
 
 	testHttpRequest(t, r, req, func(w *httptest.ResponseRecorder) bool {
 		s := w.Code == http.StatusInternalServerError
+		return s
+	})
+}
+
+/*
+	This function is responsible for checking whether
+	AddQuestion API returns a created success status code
+	when a question is added.
+*/
+func TestAddQuestionResponse(t *testing.T) {
+	r := getRouter()
+	config.CreateConn()
+
+	r.POST("/questions", controllers.AddQuestion())
+	r.DELETE("/questions/:id", controllers.DeleteQuestionById())
+	jsonData := []byte(`{
+		"author": "Josh Starmer",
+		"author_email": "josh@ff.com",
+		"title": "Test",
+		"body": "Test",
+		"tags": ["go", "web-development"]
+	}`)
+
+	req, _ := http.NewRequest("POST", "/questions", bytes.NewBuffer(jsonData))
+
+	testHttpRequest(t, r, req, func(w *httptest.ResponseRecorder) bool {
+		s := w.Code == http.StatusCreated
+		if !s {
+			return s
+		}
+
+		data, err := ioutil.ReadAll(w.Body)
+		if err != nil {
+			return false
+		}
+
+		var q models.AddQuestionResponse
+		err = json.Unmarshal(data, &q)
+
+		if err != nil {
+			return false
+		}
+
+		delReq, _ := http.NewRequest("DELETE", "/questions/"+q.Id.Hex(), nil)
+		testHttpRequest(t, r, delReq, func(w *httptest.ResponseRecorder) bool {
+			s := w.Code == http.StatusOK
+			return s
+		})
 		return s
 	})
 }
