@@ -18,7 +18,7 @@ export default function QuestionCard({question}) {
                             <span>Votes</span>
                         </div>
                         <div className="all-option">
-                            <p>{question?.answers.length}</p>
+                            <p>{question?.answers?.length}</p>
                             <span>Answers</span>
                         </div>
                         <div className="all-option">
@@ -28,11 +28,11 @@ export default function QuestionCard({question}) {
                     </div>
                 </div>
                 <div className="question-answer">
-                    <Link to={"/question"}>{question?.title}</Link>
+                    <Link to={`/question?q=${question?.id}`}>{question?.title}</Link>
                     <div style={{
                         width: "90%",
                     }}>
-                        <div>{ReactHtmlParser(truncate(question?.body, 200))}</div>
+                        <div>{ReactHtmlParser(truncate(question?.body,300))}</div>
                     </div>
                     <div style={{
                             display: "flex",
