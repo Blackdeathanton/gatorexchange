@@ -150,7 +150,7 @@ func DeleteQuestionById() gin.HandlerFunc {
 }
 
 /*
-	This API is responsible for updating the votes 
+	This API is responsible for updating the votes
 	of a question with a specific ID in the database.
 */
 func UpdateVotes() gin.HandlerFunc {
@@ -159,13 +159,13 @@ func UpdateVotes() gin.HandlerFunc {
 		id := con.Param("id")
 		vote := con.Param("vote")
 		defer cancel()
-		
+
 		questionId, err := primitive.ObjectIDFromHex(id)
 		if err != nil {
-			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "Vote update failed"})
 			return
 		}
-		
+
 		var filter = bson.M{"id": questionId}
 		var increment bson.M
 		if vote == "upvote" {
@@ -173,13 +173,13 @@ func UpdateVotes() gin.HandlerFunc {
 		} else if vote == "downvote" {
 			increment = bson.M{"downvotes": 1}
 		} else {
-			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "Vote update failed"})
 			return
 		}
 		var update = bson.M{"$inc": increment}
 		_, err = questionCollection.UpdateOne(ctx, filter, update)
 		if err != nil {
-			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "Vote update failed"})
 			return
 		}
 

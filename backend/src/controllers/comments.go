@@ -22,12 +22,12 @@ func AddComment() gin.HandlerFunc {
 		fmt.Println(comment)
 
 		if err := con.BindJSON(&comment); err != nil {
-			con.JSON(http.StatusBadRequest, gin.H{"error": err})
+			con.JSON(http.StatusBadRequest, gin.H{"error": "Error occured while adding comment"})
 			return
 		}
 		valErr := validate.Struct(&comment)
 		if valErr != nil {
-			con.JSON(http.StatusBadRequest, gin.H{"error": valErr.Error()})
+			con.JSON(http.StatusBadRequest, gin.H{"error": "Error occured while adding comment"})
 			return
 		}
 
@@ -41,7 +41,7 @@ func AddComment() gin.HandlerFunc {
 
 		questionId, err := primitive.ObjectIDFromHex(questionIdHex)
 		if err != nil {
-			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "Error occured while adding comment"})
 			return
 		}
 		answerId, _ := primitive.ObjectIDFromHex(answerIdHex)
@@ -59,11 +59,11 @@ func AddComment() gin.HandlerFunc {
 					"answers.$.comments": comment,
 				}}
 		}
-		qu, err := questionCollection.UpdateOne(ctx, filter, update)
+		_, err = questionCollection.UpdateOne(ctx, filter, update)
 		if err != nil {
-			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "Error occured while adding comment"})
 		}
 
-		con.JSON(http.StatusCreated, qu)
+		con.JSON(http.StatusCreated, gin.H{"InsertedID": comment.Id})
 	}
 }
