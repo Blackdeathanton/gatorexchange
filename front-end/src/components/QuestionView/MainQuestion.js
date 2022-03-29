@@ -6,8 +6,10 @@ import "react-quill/dist/quill.snow.css";
 import { Link } from 'react-router-dom';
 import "./index.css";
 import ReactHtmlParser from 'react-html-parser';
+import {useHistory} from 'react-router-dom';
 
 function MainQuestion() {
+    const history = useHistory();
     const [show, setShow] = useState(false)
     const [answer, setAnswer] = useState("")
     const [comment, setComment] = useState("")
@@ -18,6 +20,20 @@ function MainQuestion() {
 
     const handleQuill = (value) => {
         setAnswer(value)
+    }
+
+    const handleUpvote = () => {
+        axios.post(`/api/v2/question/${id}/vote/upvote`).then((res) => {
+            history.push("/temp")
+            history.goBack()
+        }).catch((err) => console.log(err))
+    }
+    
+    const handleDownvote = () => {
+        axios.post(`/api/v2/question/${id}/vote/downvote`).then((res) => {
+            history.push("/temp")
+            history.goBack()
+        }).catch((err) => console.log(err))
     }
 
     const handleSubmit = async() => {
@@ -98,9 +114,9 @@ function MainQuestion() {
                    <div className="question-body-container">
                        <div className="question-body-left">
                             <div className="all-options">
-                                <Link to="/"><p className="arrow">▲</p></Link>
+                                <p className="arrow" onClick={handleUpvote}>▲</p>
                                 <p className="arrow">{questionData?.upvotes - questionData?.downvotes}</p>
-                                <Link to="/"><p className="arrow">▼</p></Link>
+                                <p className="arrow" onClick={handleDownvote}>▼</p>
                            </div>
                        </div>
                        <div className="question-answer">
