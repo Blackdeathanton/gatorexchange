@@ -157,6 +157,44 @@ func GetQuestionByTag() gin.HandlerFunc {
 }
 
 /*
+	This API is responsible for updating a question
+	with the updated values provided in the client.
+*/
+func UpdateQuestion() gin.HandlerFunc {
+	return func(con *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		var question bson.M
+
+		defer cancel()
+		
+		if err := con.BindJSON(&question); err != nil {
+			con.JSON(http.StatusBadRequest, gin.H{"error": "Bad input data"})
+			return
+		}
+
+		id := con.Param("id")
+		objId, err := primitive.ObjectIDFromHex(id)
+		if err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "Invalid question id"})
+			return
+		}
+
+		var updatedQuestion bson.M
+		question["updatedtime"] = time.Now()
+		var filter = bson.M{"id": objId}
+		var update = bson.M{"$set": question}
+		var opts = options.FindOneAndUpdate().SetReturnDocument(options.After)
+
+		if err := questionCollection.FindOneAndUpdate(ctx, filter, update, opts).Decode(&updatedQuestion); err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		con.JSON(http.StatusOK, updatedQuestion)
+	}
+}
+
+/*
 	This API is responsible for deleting the question
 	with a specific ID from the database.
 */
