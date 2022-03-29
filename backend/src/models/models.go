@@ -43,3 +43,9 @@ type Comment struct {
 	CreatedTime time.Time          `json:"created_time,omitempty"`
 	UpdatedTime time.Time          `json:"updated_time,omitempty"`
 }
+
+type Tag struct {
+	Id			primitive.ObjectID `json:"id,omitempty"`
+	name		string			   `json:"name" validate:"required"`
+	count		int				   `json:"count,omitempty"`
+}
