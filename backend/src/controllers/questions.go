@@ -73,8 +73,13 @@ func GetAllQuestions() gin.HandlerFunc {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
 		defer cancel()
-
-		cursor, err := questionCollection.Find(ctx, bson.M{})
+		
+		projection := bson.M{"answers": 0, "comments": 0}
+		sort := bson.M{"createdtime": -1}
+		options := options.Find()
+		options.SetSort(sort)
+		options.SetProjection(projection)
+		cursor, err := questionCollection.Find(ctx, bson.M{}, options)
 		if err != nil {
 			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
 			return
@@ -91,7 +96,7 @@ func GetAllQuestions() gin.HandlerFunc {
 }
 
 /*
-	This API is responsible for getting all question
+	This API is responsible for getting a question
 	with the specific ID from the database.
 */
 func GetQuestionById() gin.HandlerFunc {
