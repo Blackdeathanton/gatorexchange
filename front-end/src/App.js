@@ -12,6 +12,7 @@ function App() {
                 <Appbar />
                 <Switch>
                     <Route exact path='/' component = {AllQuestionsView}/>
+                    <Route exact path='/:id' component = {AllQuestionsView}/>
                     <Route exact path='/question' component = {QuestionView}/>
                     <Route exact path='/question/:id' component = {QuestionView}/>
                     <Route exact path='/ask-question' component = {AskQuestion}/>
