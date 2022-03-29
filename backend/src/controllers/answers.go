@@ -129,3 +129,35 @@ func DeleteAnswerById() gin.HandlerFunc {
 		con.JSON(http.StatusOK, updatedQuestion)
 	}
 }
+
+func UpdateAnswerVotes() gin.HandlerFunc {
+	return func(con *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		question_id_hex := con.Param("id")
+		answer_id_hex := con.Param("aid")
+		vote := con.Param("vote")
+		defer cancel()
+
+		question_id, _ := primitive.ObjectIDFromHex(question_id_hex)
+		answer_id, _ := primitive.ObjectIDFromHex(answer_id_hex)
+
+		var filter = bson.M{"id": question_id, "answers.id": answer_id}
+		var increment bson.M
+		if vote == "upvote" {
+			increment = bson.M{"answers.$.upvotes": 1}
+		} else if vote == "downvote" {
+			increment = bson.M{"answers.$.downvotes": 1}
+		} else {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "An error occurred"})
+			return
+		}
+		var update = bson.M{"$inc": increment}
+		_, err := questionCollection.UpdateOne(ctx, filter, update)
+		if err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "An error occurred"})
+			return
+		}
+
+		con.JSON(http.StatusCreated, gin.H{"status": "Vote updated successfully"})
+	}
+}
