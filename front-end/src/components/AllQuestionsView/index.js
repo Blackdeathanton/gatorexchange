@@ -7,21 +7,34 @@ import axios from "axios";
 export default function Index() {
 
     const [questions, setQuestions] = useState([]);
+    let search = window.location.search
+    const params = new URLSearchParams(search)
+    const id = params.get("q")
 
     useEffect(() => {
         async function getQuestion() {
-            await axios
-                .get("/api/v1/questions")
+            if(id?.length>0){
+                await axios
+                .get(`/api/v2/search?q=${id}`)
                 .then((res) => {
                     setQuestions(res.data.reverse());
-                    // console.log(res.data)
                 })
                 .catch((err) => {
                     console.log(err);
                 });
+            } else {
+                await axios
+                .get("/api/v1/questions")
+                .then((res) => {
+                    setQuestions(res.data.reverse());
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+            }
         }
         getQuestion();
-    }, []);
+    }, [id]);
 
     return (
         <div className="all-questions-view-main">

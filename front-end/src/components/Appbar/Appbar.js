@@ -2,8 +2,15 @@ import React from 'react';
 import "./css/Appbar.css";
 import SearchIcon from "@mui/icons-material/Search";
 import { Link } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 
 function Appbar() {
+
+    const history = useHistory();
+    const handleSearch = (value) => {
+        console.log(value);
+        history.push(`/?q=${value}`);
+    }
     return (
         <header>
             <div className="header-container">
@@ -19,7 +26,10 @@ function Appbar() {
                 <div className="header-middle">
                     <div className="header-search-container">
                         <SearchIcon />
-                        <input type='text' placeholder='Search...'></input>
+                        <input type='text' 
+                               placeholder='Search...' 
+                               onKeyPress={(e) => e.key === 'Enter' && handleSearch(e.target.value)}>
+                        </input>
                     </div>
                 </div>
             </div>
