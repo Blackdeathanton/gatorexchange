@@ -59,6 +59,8 @@ func RunAPI(address string) error {
 		v3.POST("/questions/:id/answers/:aid/update", controllers.UpdateAnswer())
 		// Delete an Answer with Id Api
 		v3.DELETE("/questions/:id/answers/:aid", controllers.DeleteAnswerById())
+		// Update Upvote and Downvote count for Answers API
+		v3.POST("/questions/:id/answers/:aid/vote/:vote", controllers.UpdateAnswerVotes())
 	}
 
 	return rest.Run(address)
