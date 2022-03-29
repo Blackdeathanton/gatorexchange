@@ -100,3 +100,32 @@ func UpdateAnswer() gin.HandlerFunc {
 		con.JSON(http.StatusOK, updatedQuestion)
 	}
 }
+
+func DeleteAnswerById() gin.HandlerFunc {
+	return func(con *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		question_id_hex := con.Param("id")
+		answer_id_hex := con.Param("aid")
+		defer cancel()
+
+		question_id, _ := primitive.ObjectIDFromHex(question_id_hex)
+		answer_id, _ := primitive.ObjectIDFromHex(answer_id_hex)
+
+		var filter = bson.M{"id": question_id}
+		var update = bson.M{
+			"$pull": bson.M{
+				"answers": bson.M{
+					"id": answer_id,
+			}}}
+		var opts = options.FindOneAndUpdate().SetReturnDocument(options.After)
+		
+		var updatedQuestion bson.M
+		err := questionCollection.FindOneAndUpdate(ctx, filter, update, opts).Decode(&updatedQuestion)
+		if err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "An unknown error occurred"})
+			return
+		}
+
+		con.JSON(http.StatusOK, updatedQuestion)
+	}
+}
