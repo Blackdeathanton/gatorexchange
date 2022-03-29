@@ -53,6 +53,8 @@ func RunAPI(address string) error {
 	{
 		// Get Questions by Tag Api
 		v3.GET("/questions/tagged/:tag", controllers.GetQuestionByTag())
+		// Update Question Data Api
+		v3.POST("/questions/:id/update", controllers.UpdateQuestion())
 	}
 
 	return rest.Run(address)
