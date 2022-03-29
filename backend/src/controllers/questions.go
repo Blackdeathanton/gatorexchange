@@ -127,6 +127,36 @@ func GetQuestionById() gin.HandlerFunc {
 }
 
 /*
+	This API is responsible for getting all the questions
+	with the specific Tag from the database.
+*/
+func GetQuestionByTag() gin.HandlerFunc {
+	return func(con *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+
+		defer cancel()
+
+		var tag = con.Param("tag")
+		var filter = bson.M{"tags": tag}
+		var projection = bson.M{"answers": 0, "comments": 0}
+
+		cursor, err := questionCollection.Find(ctx, filter, options.Find().SetProjection(projection))
+		if err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "An error occurred while fetching the questions by tag"})
+			return
+		}
+
+		var questions []bson.M
+		if err = cursor.All(ctx, &questions); err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "An unknown error occurred"})
+			return
+		}
+
+		con.JSON(http.StatusOK, questions)
+	}
+}
+
+/*
 	This API is responsible for deleting the question
 	with a specific ID from the database.
 */
