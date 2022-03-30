@@ -158,6 +158,6 @@ func UpdateAnswerVotes() gin.HandlerFunc {
 			return
 		}
 
-		con.JSON(http.StatusCreated, gin.H{"status": "Vote updated successfully"})
+		con.JSON(http.StatusOK, gin.H{"status": "Vote updated successfully"})
 	}
 }
