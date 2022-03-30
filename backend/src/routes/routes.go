@@ -22,54 +22,68 @@ func RunAPI(address string) error {
 		users.POST("/signup", controllers.CreateUser())
 		users.POST("/login", controllers.LoginUser())
 	}
-
 	// v1 APIs
-	v1 := rest.Group("/api/v1")
+	v1_unauth := rest.Group("/api/v1")
 	{
-		v1.GET("/", func(c *gin.Context) {
+		v1_unauth.GET("/", func(c *gin.Context) {
 			c.JSON(200, gin.H{
 				"message": "Worked well!",
 			})
 		})
 		// GetAllQuestions()
-		v1.GET("/questions", controllers.GetAllQuestions())
-		// AddQuestion()
-		v1.POST("/questions", controllers.AddQuestion())
+		v1_unauth.GET("/questions", controllers.GetAllQuestions())
 		// GetQuestionById()
-		v1.GET("/questions/:id", controllers.GetQuestionById())
+		v1_unauth.GET("/questions/:id", controllers.GetQuestionById())
 	}
-	rest.Use(config.Authentication())
 
-	// v2 APIs
-	v2 := rest.Group("/api/v2")
+	// v2_unauth APIs
+	v2_unauth := rest.Group("/api/v2")
 	{
-		// Delete a question with an ID
-		v2.DELETE("/questions/:id", controllers.DeleteQuestionById())
 		// Search API
-		v2.GET("/search", controllers.SearchQuestions())
-		// Add Answer API
-		v2.POST("/answers", controllers.AddAnswer())
-		// Add Comment API
-		v2.POST("/comments", controllers.AddComment())
-		// Update Upvote and Downvote count API
-		v2.POST("/questions/:id/vote/:vote", controllers.UpdateVotes())
+		v2_unauth.GET("/search", controllers.SearchQuestions())
 	}
 
 	// v3 APIs
-	v3 := rest.Group("/api/v3")
+	v3_unauth := rest.Group("/api/v3")
 	{
 		// Get Questions by Tag Api
-		v3.GET("/questions/tagged/:tag", controllers.GetQuestionByTags())
-		// Update Question Data Api
-		v3.POST("/questions/:id/update", controllers.UpdateQuestion())
-		// Update Answer Data Api
-		v3.POST("/questions/:id/answers/:aid/update", controllers.UpdateAnswer())
-		// Delete an Answer with Id Api
-		v3.DELETE("/questions/:id/answers/:aid", controllers.DeleteAnswerById())
-		// Update Upvote and Downvote count for Answers Api
-		v3.POST("/questions/:id/answers/:aid/vote/:vote", controllers.UpdateAnswerVotes())
+		v3_unauth.GET("/questions/tagged/:tag", controllers.GetQuestionByTags())
 		// Fetch all the tags Api
-		v3.GET("/tags", controllers.GetAllTags())
+		v3_unauth.GET("/tags", controllers.GetAllTags())
+	}
+		
+	rest.Use(config.Authentication())
+
+	v1_auth := rest.Group("/api/v1")
+	{
+		// AddQuestion()
+		v1_auth.POST("/questions", controllers.AddQuestion())
+	}
+
+	// v2_unauth APIs
+	v2_auth := rest.Group("/api/v2")
+	{
+		// Delete a question with an ID
+		v2_auth.DELETE("/questions/:id", controllers.DeleteQuestionById())
+		// Add Answer API
+		v2_auth.POST("/answers", controllers.AddAnswer())
+		// Add Comment API
+		v2_auth.POST("/comments", controllers.AddComment())
+		// Update Upvote and Downvote count API
+		v2_auth.POST("/questions/:id/vote/:vote", controllers.UpdateVotes())
+	}
+
+	// v3 APIs
+	v3_auth := rest.Group("/api/v3")
+	{
+		// Update Question Data Api
+		v3_auth.POST("/questions/:id/update", controllers.UpdateQuestion())
+		// Update Answer Data Api
+		v3_auth.POST("/questions/:id/answers/:aid/update", controllers.UpdateAnswer())
+		// Delete an Answer with Id Api
+		v3_auth.DELETE("/questions/:id/answers/:aid", controllers.DeleteAnswerById())
+		// Update Upvote and Downvote count for Answers Api
+		v3_auth.POST("/questions/:id/answers/:aid/vote/:vote", controllers.UpdateAnswerVotes())
 	}
 
 	return rest.Run(address)
