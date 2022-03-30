@@ -52,7 +52,7 @@ func RunAPI(address string) error {
 	v3 := rest.Group("/api/v3")
 	{
 		// Get Questions by Tag Api
-		v3.GET("/questions/tagged/:tag", controllers.GetQuestionByTag())
+		v3.GET("/questions/tagged/:tag", controllers.GetQuestionByTags())
 		// Update Question Data Api
 		v3.POST("/questions/:id/update", controllers.UpdateQuestion())
 		// Update Answer Data Api

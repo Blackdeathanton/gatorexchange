@@ -5,6 +5,7 @@ import (
 	"backend-v1/src/models"
 	"context"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -77,6 +78,16 @@ func GetAllQuestions() gin.HandlerFunc {
 		projection := bson.M{"answers": 0, "comments": 0}
 		sort := bson.M{"createdtime": -1}
 		options := options.Find()
+
+		sortOrder, isValid := con.GetQuery("sort")
+		if isValid {
+			if sortOrder == "upvotes" {
+				sort = bson.M{"upvotes": -1}
+			} else if sortOrder == "views" {
+				sort = bson.M{"views": -1}
+			}
+		}
+
 		options.SetSort(sort)
 		options.SetProjection(projection)
 		cursor, err := questionCollection.Find(ctx, bson.M{}, options)
@@ -130,17 +141,36 @@ func GetQuestionById() gin.HandlerFunc {
 	This API is responsible for getting all the questions
 	with the specific Tag from the database.
 */
-func GetQuestionByTag() gin.HandlerFunc {
+func GetQuestionByTags() gin.HandlerFunc {
 	return func(con *gin.Context) {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 
 		defer cancel()
 
-		var tag = con.Param("tag")
-		var filter = bson.M{"tags": tag}
-		var projection = bson.M{"answers": 0, "comments": 0}
+		var tags = con.Param("tag")
+		var tagsList = strings.Split(tags, " ")
 
-		cursor, err := questionCollection.Find(ctx, filter, options.Find().SetProjection(projection))
+		var filter = bson.M{
+			"tags": bson.M{
+				"$all": tagsList,
+			}}
+		var projection = bson.M{"answers": 0, "comments": 0}
+		sort := bson.M{"createdtime": -1}
+		options := options.Find()
+
+		sortOrder, isValid := con.GetQuery("sort")
+		if isValid {
+			if sortOrder == "upvotes" {
+				sort = bson.M{"upvotes": -1}
+			} else if sortOrder == "views" {
+				sort = bson.M{"views": -1}
+			}
+		}
+		
+		options.SetSort(sort)
+		options.SetProjection(projection)
+
+		cursor, err := questionCollection.Find(ctx, filter, options)
 		if err != nil {
 			con.JSON(http.StatusInternalServerError, gin.H{"error": "An error occurred while fetching the questions by tag"})
 			return
