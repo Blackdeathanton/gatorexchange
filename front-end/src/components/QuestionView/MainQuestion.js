@@ -23,14 +23,14 @@ function MainQuestion() {
     }
 
     const handleUpvote = () => {
-        axios.post(`/api/v2/question/${id}/vote/upvote`).then((res) => {
+        axios.post(`/api/v2/questions/${id}/vote/upvote`).then((res) => {
             history.push("/temp")
             history.goBack()
         }).catch((err) => console.log(err))
     }
     
     const handleDownvote = () => {
-        axios.post(`/api/v2/question/${id}/vote/downvote`).then((res) => {
+        axios.post(`/api/v2/questions/${id}/vote/downvote`).then((res) => {
             history.push("/temp")
             history.goBack()
         }).catch((err) => console.log(err))
