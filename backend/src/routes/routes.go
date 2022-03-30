@@ -17,6 +17,12 @@ func RunAPI(address string) error {
 	rest := gin.Default()
 	config.CreateConn()
 
+	users := rest.Group("/api/users")
+	{
+		users.POST("/signup", controllers.CreateUser())
+		users.POST("/login", controllers.LoginUser())
+	}
+
 	// v1 APIs
 	v1 := rest.Group("/api/v1")
 	{
@@ -32,6 +38,7 @@ func RunAPI(address string) error {
 		// GetQuestionById()
 		v1.GET("/questions/:id", controllers.GetQuestionById())
 	}
+	rest.Use(config.Authentication())
 
 	// v2 APIs
 	v2 := rest.Group("/api/v2")
