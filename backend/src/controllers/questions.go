@@ -88,9 +88,22 @@ func GetAllQuestions() gin.HandlerFunc {
 			}
 		}
 
+		filter := bson.M{}
+		filterParams, isValid := con.GetQuery("filters")
+		if isValid {
+			var filtersList = strings.Split(filterParams, ",")
+			for _, param := range filtersList {
+				if param == "NoAnswers" {
+					filter["answers"] = bson.M{"$exists": true, "$size": 0}
+				} else if param == "HasUpvotes" {
+					filter["upvotes"] = bson.M{"$exists": true, "$gt": 0}
+				}
+			}
+		}
+
 		options.SetSort(sort)
 		options.SetProjection(projection)
-		cursor, err := questionCollection.Find(ctx, bson.M{}, options)
+		cursor, err := questionCollection.Find(ctx, filter, options)
 		if err != nil {
 			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
 			return
@@ -164,6 +177,18 @@ func GetQuestionByTags() gin.HandlerFunc {
 				sort = bson.M{"upvotes": -1}
 			} else if sortOrder == "views" {
 				sort = bson.M{"views": -1}
+			}
+		}
+
+		filterParams, isValid := con.GetQuery("filters")
+		if isValid {
+			var filtersList = strings.Split(filterParams, ",")
+			for _, param := range filtersList {
+				if param == "NoAnswers" {
+					filter["answers"] = bson.M{"$exists": true, "$size": 0}
+				} else if param == "HasUpvotes" {
+					filter["upvotes"] = bson.M{"$exists": true, "$gt": 0}
+				}
 			}
 		}
 		
