@@ -9,13 +9,13 @@ function Appbar() {
     const history = useHistory();
     const handleSearch = (value) => {
         console.log(value);
-        history.push(`/?q=${value}`);
+        history.push(`/questions?q=${value}`);
     }
     return (
         <header>
             <div className="header-container">
                 <div className="header-left">
-                    <Link to='/'>
+                    <Link to='/questions'>
                         <div className="header-left-img-container">
                             <img src = {require('./img/gator.png')} alt="logo"/>
                             <span>GatorExchange</span>

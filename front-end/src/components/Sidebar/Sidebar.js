@@ -8,13 +8,13 @@ export default function Sidebar(){
             <div className="sidebar-container">
                 <div className="sidebar-options">
                     <div className="sidebar-option">
-                        <Link to='/'>Home</Link>
+                        <Link to='/questions'>Home</Link>
                     </div>
                     <div className="sidebar-option">
-                        <Link to='/'>Questions</Link>
+                        <Link to='/questions'>Questions</Link>
                     </div>
                     <div className="sidebar-option">
-                        <Link to='/'>Tags</Link>
+                        <Link to='/questions'>Tags</Link>
                     </div>
                 </div>
             </div>

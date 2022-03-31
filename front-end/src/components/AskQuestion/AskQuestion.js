@@ -37,7 +37,7 @@ export default function AskQuestion() {
                     // console.log(res.data);
                     alert("Question added successfully");
                     setLoading(false);
-                    history.push("/");
+                    history.push("/questions");
                 })
                 .catch((err) => {
                     setLoading(false);  
