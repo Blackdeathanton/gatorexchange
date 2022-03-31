@@ -81,7 +81,6 @@ function MainQuestion() {
             }
 
             await axios.post("/api/v2/comments", body).then((res) => {
-                console.log(res.data)
                 setComment("")
                 setShow(false)
                 getUpdatedAnswer()
@@ -91,7 +90,6 @@ function MainQuestion() {
     
     async function getUpdatedAnswer() {
         await axios.get(`api/v1/questions/${id}`).then((res) => {
-            console.log(res.data)
             setQuestionData(res.data)
         }).catch((err) => {
             console.log(err)
@@ -101,7 +99,6 @@ function MainQuestion() {
     useEffect(() => {
         async function getQuestionDetails() {
             await axios.get(`api/v1/questions/${id}`).then((res) => {
-                console.log(res.data)
                 setQuestionData(res.data)
             }).catch((err) => {
                 console.log(err)
