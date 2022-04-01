@@ -63,5 +63,68 @@ describe('Cypress tests for api request and response', () => {
 
   //POST requests
   
+  context('POST requests', () => {
+    let token = "";
+    it('should send login request using POST api', () => {
+      cy.request({
+        method: 'POST',
+        url: 'http://localhost:3000/api/users/login',
+        body: {
+          email: "admin1@abc.com",
+          password: "admin1234"
+        }
+      })
+        .should((response) => {
+          expect(response.status).eq(200)
+          token = response.body.refresh_token
+        });
+    });
 
+    it('should post or add a question using POST request', () => {
+      cy.request({
+        method: 'POST',
+        url: 'http://localhost:3000/api/v1/questions',
+        headers: {
+          token: token
+        },
+        body: {
+          author: "admin2",
+          author_email: "admin2@abc.com",
+          title: "Test question title",
+          body: "Test question <b>body</b>",
+          tags: ["test"]
+        }
+      })
+        .should((response) => {
+          expect(response.status).eq(201)
+          expect(response.body).to.include.keys('InsertedID')
+        });
+    });
+
+    it('should post an upvote and/or a downvote for question', () => {
+      cy.request({
+        method: 'POST',
+        url: ' http://localhost:3000/api/v2/questions/6247686b33ef57dcc70d43f4/vote/upvote',
+        headers: {
+          token: token
+        },
+        body: {}
+      }).should((response) => {
+        expect(response.status).eq(200)
+        expect(response.body.status).eq("Vote updated successfully")
+      });
+
+      cy.request({
+        method: 'POST',
+        url: ' http://localhost:3000/api/v2/questions/6247686b33ef57dcc70d43f4/vote/downvote',
+        headers: {
+          token: token
+        },
+        body: {}
+      }).should((response) => {
+        expect(response.status).eq(200)
+        expect(response.body.status).eq("Vote updated successfully")
+      });
+    });
+  });
 });
