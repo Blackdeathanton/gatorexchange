@@ -86,7 +86,7 @@ func TestAddAnswerResponseFailure(t *testing.T) {
 
 /*
 	This function is responsible for checking whether
-	Vote API returns a created success status code
+	Vote API returns a success status code
 	when an upvote or a downvote is added.
 */
 func TestAnswerVoteResponseSuccess(t *testing.T) {
@@ -112,7 +112,7 @@ func TestAnswerVoteResponseSuccess(t *testing.T) {
 
 /*
 	This function is responsible for checking whether
-	Vote API returns a created failure status code
+	Vote API returns a failure status code
 	when an upvote is tried to be added for an answer
 	that does not exist.
 */

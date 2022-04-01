@@ -185,7 +185,7 @@ func TestAddQuestionResponseSuccess(t *testing.T) {
 
 /*
 	This function is responsible for checking whether
-	Vote API returns a created success status code
+	Vote API returns a success status code
 	when an upvote or a downvote is added.
 */
 func TestUpvoteDownvoteResponseSuccess(t *testing.T) {
@@ -211,7 +211,7 @@ func TestUpvoteDownvoteResponseSuccess(t *testing.T) {
 
 /*
 	This function is responsible for checking whether
-	Vote API returns a created failure status code
+	Vote API returns a failure status code
 	when an upvote is tried to be added for a question
 	that does not exist.
 */
@@ -225,5 +225,57 @@ func TestUpvoteDownvoteResponseFailure(t *testing.T) {
 	testHttpRequest(t, r, req, func(w *httptest.ResponseRecorder) bool {
 		s := w.Code == http.StatusInternalServerError
 		return s
+	})
+}
+
+/*
+	This function is responsible for checking whether
+	SortQuestions API returns a success status code
+	when an upvote or a downvote is added.
+*/
+func TestSortQuestionsResponseSuccess(t *testing.T) {
+	r := getRouter()
+	config.CreateConn()
+
+	r.POST("/questions/:id/vote/:vote", controllers.UpdateVotes())
+	req, _ := http.NewRequest("POST", "/questions/61f8501e5a82885c6ef0def7/vote/upvote", nil)
+
+	testHttpRequest(t, r, req, func(w *httptest.ResponseRecorder) bool {
+		s := w.Code == http.StatusOK
+		if !s {
+			return s
+		}
+		req, _ := http.NewRequest("POST", "/questions/61f8501e5a82885c6ef0def7/vote/downvote", nil)
+		testHttpRequest(t, r, req, func(w *httptest.ResponseRecorder) bool {
+			s := w.Code == http.StatusOK
+			return s
+		})
+		return s
+	})
+}
+
+/*
+	This function is responsible for checking whether
+	TaggedQuestions API returns a success status code
+	when an upvote or a downvote is added.
+*/
+func TestTaggedQuestionsResponseSuccess(t *testing.T) {
+	r := getRouter()
+	config.CreateConn()
+
+	r.GET("/questions/tagged/:tag", controllers.GetQuestionByTags())
+	req, _ := http.NewRequest("GET", "/questions/tagged/go", nil)
+
+	testHttpRequest(t, r, req, func(w *httptest.ResponseRecorder) bool {
+		s := w.Code == http.StatusOK
+
+		data, err := ioutil.ReadAll(w.Body)
+		if err != nil {
+			return false
+		}
+		var questions []models.Question
+		err = json.Unmarshal(data, &questions)
+
+		return err == nil && len(questions) > 0 && s
 	})
 }
