@@ -83,3 +83,49 @@ func TestAddAnswerResponseFailure(t *testing.T) {
 		return w.Code == http.StatusInternalServerError
 	})
 }
+
+/*
+	This function is responsible for checking whether
+	Vote API returns a created success status code
+	when an upvote or a downvote is added.
+*/
+func TestAnswerVoteResponseSuccess(t *testing.T) {
+	r := getRouter()
+	config.CreateConn()
+
+	r.POST("/questions/:id/answers/:aid/vote/:vote", controllers.UpdateAnswerVotes())
+	req, _ := http.NewRequest("POST", "/questions/61f8501e5a82885c6ef0def7/answers/62474ae19b9bb6a5fdae159b/vote/upvote", nil)
+
+	testHttpRequest(t, r, req, func(w *httptest.ResponseRecorder) bool {
+		s := w.Code == http.StatusOK
+		if !s {
+			return s
+		}
+		req, _ := http.NewRequest("POST", "/questions/61f8501e5a82885c6ef0def7/answers/62474ae19b9bb6a5fdae159b/vote/downvote", nil)
+		testHttpRequest(t, r, req, func(w *httptest.ResponseRecorder) bool {
+			s := w.Code == http.StatusOK
+			return s
+		})
+		return s
+	})
+}
+
+/*
+	This function is responsible for checking whether
+	Vote API returns a created failure status code
+	when an upvote is tried to be added for an answer
+	that does not exist.
+*/
+// func TestAnswerVoteResponseFailure(t *testing.T) {
+// 	r := getRouter()
+// 	config.CreateConn()
+
+// 	r.POST("/questions/:id/answers/:aid/vote/:vote", controllers.UpdateAnswerVotes())
+// 	req, _ := http.NewRequest("POST", "/questions/61f8501e5a82885c6ef0def7/answers/62474ae19b9bb6a5fdae159b8sa/vote/upvote", nil)
+
+// 	testHttpRequest(t, r, req, func(w *httptest.ResponseRecorder) bool {
+// 		fmt.Println(w)
+// 		s := w.Code == http.StatusInternalServerError
+// 		return s
+// 	})
+// }
