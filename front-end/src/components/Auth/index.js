@@ -148,11 +148,11 @@ function Index() {
                             <>
                                 <div className="input-field">
                                     <p> Email</p>
-                                    <input value={email} onChange={(e) => setEmail(e.target.value)} type="email"/>
+                                    <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" data-testid="login-email"/>
                                 </div>
                                 <div className="input-field">
                                     <p> Password</p>
-                                    <input value={password} onChange={(e) => setPassword(e.target.value)} type="password"/>
+                                    <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" data-testid="login-password"/>
                                 </div>
                                 <button onClick={handleSignIn} 
                                         disabled={loading}

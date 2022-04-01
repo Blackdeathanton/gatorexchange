@@ -40,7 +40,6 @@ export default function AskQuestion() {
             await axios
                 .post("/api/v1/questions", bodyJSON, config)
                 .then((res) => {
-                    // console.log(res.data);
                     alert("Question added successfully");
                     setLoading(false);
                     history.push("/questions");

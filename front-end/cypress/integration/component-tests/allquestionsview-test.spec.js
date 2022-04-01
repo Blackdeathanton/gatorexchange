@@ -1,6 +1,6 @@
 describe('Cypress test for sidebar', () => {
   it('loads succesfully with question cards displayed', () => {
-    cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:3000/questions')
     cy.get('.all-questions-view').should('be.visible')
     cy.get('.all-questions-view-top').should('contain.text', 'All Questions')
     cy.get('.all-questions-view-top > a').should('contain.text', 'Ask questions')
@@ -17,5 +17,6 @@ describe('Cypress test for sidebar', () => {
     // click question card test
     cy.get('.question-answer > a').eq(0).click()
     cy.get('.main-question-container').should('be.visible')
+    cy.get('.question-body').should('be.visible')
   })
 });
