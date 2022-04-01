@@ -20,19 +20,19 @@ func AddAnswer() gin.HandlerFunc {
 		defer cancel()
 
 		if err := con.BindJSON(&answer); err != nil {
-			con.JSON(http.StatusBadRequest, gin.H{"error": err})
+			con.JSON(http.StatusBadRequest, gin.H{"error": "Error occured while adding answer"})
 			return
 		}
 		valErr := validate.Struct(&answer)
 		if valErr != nil {
-			con.JSON(http.StatusBadRequest, gin.H{"error": valErr.Error()})
+			con.JSON(http.StatusBadRequest, gin.H{"error": "Error occured while adding answer"})
 			return
 		}
 
 		var questionIdHex = answer.QuestionId
 		questionId, err := primitive.ObjectIDFromHex(questionIdHex)
 		if err != nil {
-			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "Error occured while adding answer"})
 			return
 		}
 
@@ -44,13 +44,13 @@ func AddAnswer() gin.HandlerFunc {
 			"$push": bson.M{
 				"answers": answer,
 			}}
-		qu, err := questionCollection.UpdateOne(ctx, filter, update)
+		_, err = questionCollection.UpdateOne(ctx, filter, update)
 		if err != nil {
-			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "Error occured while adding answer"})
 			return
 		}
 
-		con.JSON(http.StatusCreated, qu)
+		con.JSON(http.StatusCreated, gin.H{"InsertedID": answer.Id})
 	}
 }
 

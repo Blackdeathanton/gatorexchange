@@ -105,13 +105,13 @@ func GetAllQuestions() gin.HandlerFunc {
 		options.SetProjection(projection)
 		cursor, err := questionCollection.Find(ctx, filter, options)
 		if err != nil {
-			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "An Error Occurred"})
 			return
 		}
 
 		var questions []bson.M
 		if err = cursor.All(ctx, &questions); err != nil {
-			con.JSON(http.StatusInternalServerError, gin.H{"error reading data": err})
+			con.JSON(http.StatusInternalServerError, gin.H{"error":"Error reading data"})
 			return
 		}
 
@@ -142,7 +142,7 @@ func GetQuestionById() gin.HandlerFunc {
 		var opts = options.FindOneAndUpdate().SetReturnDocument(options.After)
 
 		if err := questionCollection.FindOneAndUpdate(ctx, filter, update, opts).Decode(&question); err != nil {
-			con.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "An Error Occurred"})
 			return
 		}
 
@@ -241,7 +241,7 @@ func UpdateQuestion() gin.HandlerFunc {
 		var opts = options.FindOneAndUpdate().SetReturnDocument(options.After)
 
 		if err := questionCollection.FindOneAndUpdate(ctx, filter, update, opts).Decode(&updatedQuestion); err != nil {
-			con.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "An Error Occurred"})
 			return
 		}
 
@@ -264,7 +264,7 @@ func DeleteQuestionById() gin.HandlerFunc {
 		result, err := questionCollection.DeleteOne(ctx, bson.M{"id": objId})
 
 		if err != nil {
-			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "An Error Occurred"})
 			return
 		}
 
@@ -290,7 +290,7 @@ func UpdateVotes() gin.HandlerFunc {
 		
 		questionId, err := primitive.ObjectIDFromHex(id)
 		if err != nil {
-			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "An Error Occurred"})
 			return
 		}
 		
@@ -301,13 +301,13 @@ func UpdateVotes() gin.HandlerFunc {
 		} else if vote == "downvote" {
 			increment = bson.M{"downvotes": 1}
 		} else {
-			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "An Error Occurred"})
 			return
 		}
 		var update = bson.M{"$inc": increment}
 		_, err = questionCollection.UpdateOne(ctx, filter, update)
 		if err != nil {
-			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "An Error Occurred"})
 			return
 		}
 
