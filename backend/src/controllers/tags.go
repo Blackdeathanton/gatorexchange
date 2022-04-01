@@ -64,6 +64,35 @@ func GetAllTags() gin.HandlerFunc {
 	}
 }
 
+func GetAllTagsFromQuestions() gin.HandlerFunc {
+	return func(con *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+
+		defer cancel()
+
+		//project := bson.M{ "$project": bson.M{"tags": 1}}
+		unwind := bson.M{"$unwind": "$tags"}
+		group := bson.M{ 
+			"$group": bson.M{ 
+				"_id": "$tags",
+				"count": bson.M{ "$sum": 1 }}}
+		
+		cursor, err := questionCollection.Aggregate(ctx, []bson.M{unwind, group})
+		if err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "An Error Occurred"})
+			return
+		}
+
+		var tags []bson.M
+		if err = cursor.All(ctx, &tags); err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "An Error Occurred"})
+			return
+		}
+
+		con.JSON(http.StatusOK, tags)
+	}
+}
+
 func DeleteTagByName() gin.HandlerFunc {
 	return func(con *gin.Context) {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)

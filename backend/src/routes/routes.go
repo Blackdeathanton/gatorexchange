@@ -49,7 +49,7 @@ func RunAPI(address string) error {
 		// Get Questions by Tag Api
 		v3_unauth.GET("/questions/tagged/:tag", controllers.GetQuestionByTags())
 		// Fetch all the tags Api
-		v3_unauth.GET("/tags", controllers.GetAllTags())
+		v3_unauth.GET("/tags", controllers.GetAllTagsFromQuestions())
 	}
 		
 	rest.Use(config.Authentication())
