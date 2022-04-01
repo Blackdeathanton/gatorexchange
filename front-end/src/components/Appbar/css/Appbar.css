@@ -69,6 +69,30 @@ header{
     color: #ccc;
 }
 
+.header-right > .header-right-container {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+}
+  
+.header-right-container > .MuiSvgIcon-root {
+    margin: 0px 5px;
+    color: rgba(0, 0, 0, 0.534);
+    padding: 10px 5px;
+    cursor: pointer;
+}
+  
+.header-right-container > .MuiSvgIcon-root:hover {
+    background-color: #ddd;
+    color: #000;
+}
+  
+.header-right-container > img {
+    width: 20px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
     .header-middle {
         display: none;

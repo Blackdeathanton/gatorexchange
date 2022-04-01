@@ -6,8 +6,10 @@ import "react-quill/dist/quill.snow.css";
 import { Link } from 'react-router-dom';
 import "./index.css";
 import ReactHtmlParser from 'react-html-parser';
+import { useHistory } from 'react-router-dom';
 
 function MainQuestion() {
+    const history = useHistory()
     const [show, setShow] = useState(false)
     const [answer, setAnswer] = useState("")
     const [comment, setComment] = useState("")
@@ -22,14 +24,20 @@ function MainQuestion() {
 
     const handleSubmit = async() => {
         if(answer !== "") {
+            //TODO
+            if (!sessionStorage.getItem("token")){
+                history.push("/auth");
+                return;
+            }
+
             const body = {
                 question_id: id,
                 body:  answer,
-                author: "default",
+                author: sessionStorage.getItem("username"),//TODO
             }
             const config = {
-                header: {
-                    "Content-type": "application/json"
+                headers: {
+                    "token": sessionStorage.getItem("token")
                 }
             }
 
@@ -44,13 +52,25 @@ function MainQuestion() {
 
     const handleComment = async() => {
         if (comment !== ""){
+            //TODO
+            if (!sessionStorage.getItem("token")){
+                history.push("/auth");
+                return;
+            }
+
             const body = {
                 question_id: id,
                 body: comment,
-                author: "default"
+                author: sessionStorage.getItem("username")
             }
 
-            await axios.post("/api/v2/comments", body).then((res) => {
+            const config = {
+                headers: {
+                    "token": sessionStorage.getItem("token")
+                }
+            }
+
+            await axios.post("/api/v2/comments", body, config).then((res) => {
                 console.log(res.data)
                 setComment("")
                 setShow(false)

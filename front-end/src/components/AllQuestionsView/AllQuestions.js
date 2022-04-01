@@ -19,7 +19,7 @@ export default function AllQuestions({questions}) {
                 <div className="all-questions-view-content">{
                     questions.map((question, index) => (
                         <div className="question-view-content" key={index}>
-                            <QuestionCard question={question}/>
+                            <QuestionCard index={index} question={question}/>
                         </div>
                     ))}                    
                 </div>

@@ -25,14 +25,20 @@ export default function AskQuestion() {
         if (title !== "" && body !== "") {
             setLoading(true)
             const bodyJSON = {
-                author: "author_name",
-                author_email: "author@email.com",
+                //TODO:
+                author: sessionStorage.getItem("username"),
+                author_email: sessionStorage.getItem("email"),
                 title: title,
                 body: body,
                 tags: tags
             };
+            const config = {
+                headers: {
+                    "token": sessionStorage.getItem("token")
+                }
+            }
             await axios
-                .post("/api/v1/questions", bodyJSON)
+                .post("/api/v1/questions", bodyJSON, config)
                 .then((res) => {
                     // console.log(res.data);
                     alert("Question added successfully");
