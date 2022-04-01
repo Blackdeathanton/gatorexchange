@@ -14,7 +14,7 @@ export default function Sidebar(){
                         <Link to='/questions'>Questions</Link>
                     </div>
                     <div className="sidebar-option">
-                        <Link to='/questions'>Tags</Link>
+                        <Link to='/tags'>Tags</Link>
                     </div>
                 </div>
             </div>

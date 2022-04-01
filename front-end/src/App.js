@@ -4,6 +4,7 @@ import AllQuestionsView from './components/AllQuestionsView';
 import AskQuestion from './components/AskQuestion/AskQuestion';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import QuestionView from './components/QuestionView';
+import Tags from './components/Tags';
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                     <Route exact key='view-question' path='/question' component = {QuestionView}/>
                     <Route exact key='ask-question' path='/ask-question' component = {AskQuestion}/>
                     <Route exact key='all-questions' path='/questions/:id?' component = {AllQuestionsView}/>
+                    <Route exact path='/tags' component= {Tags}/>
                 </Switch>
             </Router>
         </div>

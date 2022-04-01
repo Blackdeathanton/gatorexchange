@@ -14,14 +14,25 @@ export default function Index() {
     useEffect(() => {
         async function getQuestion() {
             if(id?.length>0){
-                await axios
-                .get(`/api/v2/search?q=${id}`)
-                .then((res) => {
-                    setQuestions(res.data.reverse());
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+                if(id[0] === '_') {
+                    await axios
+                        .get(`/api/v3/questions/tagged/${id.substring(1)}`)
+                        .then((res) => {
+                            setQuestions(res.data.reverse());
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                } else {
+                    await axios
+                        .get(`/api/v2/search?q=${id}`)
+                        .then((res) => {
+                            setQuestions(res.data.reverse());
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                }
             } else {
                 await axios
                 .get("/api/v1/questions")
