@@ -29,12 +29,12 @@ return (
             <div className="all-tags-view-container">
                 <div className="all-tags-view-top">
                     <h2>Tags</h2>
-                    <p style={{maxWidth: "57%"}}>A tag is a keyword or label that categorizes your question with other, similar questions. Using the right tags makes it easier for others to find and answer your question.</p>
+                    <p style={{maxWidth: "60%"}}>A tag is a keyword or label that categorizes your question with other, similar questions. Using the right tags makes it easier for others to find and answer your question.</p>
                 </div>
                 <div className="all-tags-view-content">{
                     tagslist.map((tag, index) => (
                         <div className="tag-view-content" key={index}>
-                            <Link to={`/questions?q=_${encodeURIComponent(tag.name)}`}><div className="tagname">{tag.name}</div></Link>
+                            <Link to={`/questions?q=_${encodeURIComponent(tag._id)}`}><div className="tagname">{tag._id}</div></Link>
                             <div style={{marginBottom: "5px"}}>Sample description</div>
                             <div style={{marginBottom: "5px"}}>{tag.count} question(s)</div>
                         </div>
