@@ -7,3 +7,7 @@ import (
 type AddQuestionResponse struct {
 	Id primitive.ObjectID `json:"InsertedID,omitempty"`
 }
+
+type AddAnswerResponse struct {
+	Id primitive.ObjectID `json:"InsertedID,omitempty"`
+}
