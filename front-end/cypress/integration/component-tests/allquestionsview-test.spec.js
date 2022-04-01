@@ -17,5 +17,6 @@ describe('Cypress test for sidebar', () => {
     // click question card test
     cy.get('.question-answer > a').eq(0).click()
     cy.get('.main-question-container').should('be.visible')
+    cy.get('.question-body').should('be.visible')
   })
 });
