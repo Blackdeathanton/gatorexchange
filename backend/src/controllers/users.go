@@ -75,7 +75,7 @@ func CreateUser() gin.HandlerFunc {
 			return
 		}
 
-		count, err = userCollection.CountDocuments(ctx, bson.M{"email": user.Username})
+		count, err = userCollection.CountDocuments(ctx, bson.M{"username": user.Username})
 		defer cancel()
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err})
