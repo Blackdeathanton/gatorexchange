@@ -39,7 +39,7 @@ export default function QuestionCard({question}) {
                         }}>
                         {question?.tags.map((tag) => (
                             <>
-                                <span className="tags">{tag}</span>
+                                <Link to={`/questions?q=_${encodeURIComponent(tag)}`}><div className="tags">{tag}</div></Link>
                             </>
                         ))}
                     </div>
