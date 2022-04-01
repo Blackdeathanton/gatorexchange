@@ -99,7 +99,7 @@ function Index() {
                     sessionStorage.setItem("email", data.email);
                     
 
-                    history.push('/')
+                    history.push('/questions')
                 })
                 .catch((err) => {
                     setLoading(false);  

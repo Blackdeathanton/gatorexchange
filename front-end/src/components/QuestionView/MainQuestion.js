@@ -23,28 +23,69 @@ function MainQuestion() {
     }
 
     const handleQuestionUpvote = () => {
-        axios.post(`/api/v2/questions/${id}/vote/upvote`).then((res) => {
+        //TODO
+        if (!sessionStorage.getItem("token")){
+            history.push("/auth");
+            return;
+        }
+        const config = {
+            headers: {
+                "token": sessionStorage.getItem("token")
+            }
+        }
+
+        axios.post(`/api/v2/questions/${id}/vote/upvote`, {}, config).then((res) => {
             history.push("/temp")
             history.goBack()
         }).catch((err) => console.log(err))
     }
     
     const handleQuestionDownvote = () => {
-        axios.post(`/api/v2/questions/${id}/vote/downvote`).then((res) => {
+        //TODO
+        if (!sessionStorage.getItem("token")){
+            history.push("/auth");
+            return;
+        }
+        const config = {
+            headers: {
+                "token": sessionStorage.getItem("token")
+            }
+        }
+        axios.post(`/api/v2/questions/${id}/vote/downvote`, {}, config).then((res) => {
             history.push("/temp")
             history.goBack()
         }).catch((err) => console.log(err))
     }
 
     const handleAnswerUpvote = (answerId) => {
-        axios.post(`/api/v3/questions/${id}/answers/${answerId}/vote/upvote`).then((res) => {
+        //TODO
+        if (!sessionStorage.getItem("token")){
+            history.push("/auth");
+            return;
+        }
+        const config = {
+            headers: {
+                "token": sessionStorage.getItem("token")
+            }
+        }
+        axios.post(`/api/v3/questions/${id}/answers/${answerId}/vote/upvote`, {}, config).then((res) => {
             history.push("/temp")
             history.goBack()
         }).catch((err) => console.log(err))
     }
     
     const handleAnswerDownvote = (answerId) => {
-        axios.post(`/api/v3/questions/${id}/answers/${answerId}/vote/downvote`).then((res) => {
+        //TODO
+        if (!sessionStorage.getItem("token")){
+            history.push("/auth");
+            return;
+        }
+        const config = {
+            headers: {
+                "token": sessionStorage.getItem("token")
+            }
+        }
+        axios.post(`/api/v3/questions/${id}/answers/${answerId}/vote/downvote`, {}, config).then((res) => {
             history.push("/temp")
             history.goBack()
         }).catch((err) => console.log(err))
@@ -196,9 +237,9 @@ function MainQuestion() {
                         <div key={answer?.id} className="question-body-container">
                             <div className="question-body-left">
                             <div className="all-options">
-                                    <p className="arrow" onClick={handleAnswerUpvote(answer?.id)}>▲</p>
-                                    <p className="arrow">0</p>
-                                    <p className="arrow" onClick={handleAnswerDownvote(answer?.id)}>▼</p>
+                                    <p className="arrow" onClick={() => {handleAnswerUpvote(answer?.id)}}>▲</p>
+                                    <p className="arrow">{answer?.upvotes-answer?.downvotes}</p>
+                                    <p className="arrow" onClick={() => {handleAnswerDownvote(answer?.id)}}>▼</p>
                             </div>
                             </div>
                             <div className="question-answer">
