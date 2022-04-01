@@ -20,11 +20,10 @@ import AllQuestions from '../components/AllQuestionsView';
 describe('Header component', () => {
  test('it renders', () => {
    render(<AllQuestions />);
-   expect(screen.getByText('')).toBeInTheDocument();
-   expect(screen.getByText('PROFILE')).toBeInTheDocument();
-   expect(screen.getByTestId('HOME') ).toBeInTheDocument();
-   expect(screen.getByTestId('ABOUT') ).toBeInTheDocument();
-   expect(screen.getByTestId('MOVIES & SHOWS') ).toBeInTheDocument();
+   expect(screen.getByText('All Questions')).toBeInTheDocument();
+   expect(screen.getByTestId('Home') ).toBeInTheDocument();
+   expect(screen.getByTestId('Questions') ).toBeInTheDocument();
+   expect(screen.getByTestId('Tags') ).toBeInTheDocument();
  });
 })
 
