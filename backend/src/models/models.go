@@ -43,3 +43,22 @@ type Comment struct {
 	CreatedTime time.Time          `json:"created_time,omitempty"`
 	UpdatedTime time.Time          `json:"updated_time,omitempty"`
 }
+
+type Tag struct {
+	Id			primitive.ObjectID `json:"id,omitempty"`
+	Name		string			   `json:"name" validate:"required"`
+	Count		int				   `json:"count,omitempty"`
+}
+
+type User struct {
+	Id           primitive.ObjectID `json:"id,omitempty"`
+	Username     string             `json:"username" validate:"required"`
+	FirstName    string             `json:"first_name" validate:"required"`
+	LastName     string             `json:"last_name" validate:"required"`
+	Email        string             `json:"email" validate:"email,required"`
+	Password     string             `json:"password" validate:"required,min=8"`
+	Token        string             `json:"token"`
+	RefreshToken string             `json:"refresh_token"`
+	CreatedTime  time.Time          `json:"created_time,omitempty"`
+	UpdatedTime  time.Time          `json:"updated_time,omitempty"`
+}

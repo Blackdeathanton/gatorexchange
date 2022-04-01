@@ -19,6 +19,17 @@ func SearchQuestions() gin.HandlerFunc {
 		query, isValid := con.GetQuery("q")
 		if !isValid {
 			con.JSON(http.StatusInternalServerError, 404)
+		}		
+		sort := bson.M{"createdtime": -1}
+		options := options.Find()
+
+		sortOrder, isValid := con.GetQuery("sort")
+		if isValid {
+			if sortOrder == "upvotes" {
+				sort = bson.M{"upvotes": -1}
+			} else if sortOrder == "views" {
+				sort = bson.M{"views": -1}
+			}
 		}
 
 		var query_regex = "(?i).*" + query + ".*"
@@ -30,7 +41,10 @@ func SearchQuestions() gin.HandlerFunc {
 		}
 		projection := bson.M{"answers": 0, "comments": 0}
 
-		cursor, err := questionCollection.Find(ctx, filter, options.Find().SetProjection(projection))
+		options.SetSort(sort)
+		options.SetProjection(projection)
+
+		cursor, err := questionCollection.Find(ctx, filter, options)
 		if err != nil {
 			con.JSON(http.StatusInternalServerError, gin.H{"error": err})
 		}
