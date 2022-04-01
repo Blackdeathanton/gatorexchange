@@ -75,7 +75,7 @@ func GetAllQuestions() gin.HandlerFunc {
 
 		defer cancel()
 		
-		projection := bson.M{"answers": 0, "comments": 0}
+		// projection := bson.M{"answers": 0, "comments": 0}
 		sort := bson.M{"createdtime": -1}
 		options := options.Find()
 
@@ -102,7 +102,7 @@ func GetAllQuestions() gin.HandlerFunc {
 		}
 
 		options.SetSort(sort)
-		options.SetProjection(projection)
+		//options.SetProjection(projection)
 		cursor, err := questionCollection.Find(ctx, filter, options)
 		if err != nil {
 			con.JSON(http.StatusInternalServerError, gin.H{"error": "An Error Occurred"})
