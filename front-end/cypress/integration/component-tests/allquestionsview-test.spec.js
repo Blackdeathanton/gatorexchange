@@ -1,6 +1,6 @@
 describe('Cypress test for sidebar', () => {
   it('loads succesfully with question cards displayed', () => {
-    cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:3000/questions')
     cy.get('.all-questions-view').should('be.visible')
     cy.get('.all-questions-view-top').should('contain.text', 'All Questions')
     cy.get('.all-questions-view-top > a').should('contain.text', 'Ask questions')
