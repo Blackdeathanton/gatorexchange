@@ -38,6 +38,7 @@
 
 .all-tags-view-content {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   width: 100%;
 }
