@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import "./css/QuestionCard.css";
 import ReactHtmlParser from 'react-html-parser';
 
-export default function QuestionCard({question}) {
+export default function QuestionCard({question, index}) {
     function truncate(string, n) {
         return (string?.length > n) ? string.substr(0, n-1) + "..." : string;
     }
     
     return (
-        <div className="question">
+        <div key={index} className="question">
             <div className="question-container">
                 <div className="question-left">
                     <div className="all-options">
@@ -37,7 +37,7 @@ export default function QuestionCard({question}) {
                     <div style={{
                             display: "flex",
                         }}>
-                        {question?.tags.map((tag) => (
+                        {question?.tags.map((tag, index) => (
                             <>
                                 <Link to={`/questions?q=_${encodeURIComponent(tag)}`}><div className="tags">{tag}</div></Link>
                             </>
