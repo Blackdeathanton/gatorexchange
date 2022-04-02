@@ -22,6 +22,7 @@
  - Integrated upvote and downvote with backend, along with user auth checks for both answers and questions
  - Account creation, login and logout functionalities implemented and integrated with backend
  - Option to view questions under a tag from a question card in home page
+ - Added TEST cases for every feature/functionality implemented and integrated in Sprint 3 in the frontend
 
 ### 4. Documentation
 
