@@ -279,3 +279,29 @@ func TestTaggedQuestionsResponseSuccess(t *testing.T) {
 		return err == nil && len(questions) > 0 && s
 	})
 }
+
+/*
+	This function is responsible for checking whether
+	FilterQuestions API returns a success status code
+	when an upvote or a downvote is added.
+*/
+func TestFilterQuestionsResponseSuccess(t *testing.T) {
+	r := getRouter()
+	config.CreateConn()
+
+	r.GET("/questions", controllers.GetAllQuestions())
+	req, _ := http.NewRequest("GET", "/questions?filters=HasUpvotes,NoAnswers", nil)
+
+	testHttpRequest(t, r, req, func(w *httptest.ResponseRecorder) bool {
+		s := w.Code == http.StatusOK
+
+		data, err := ioutil.ReadAll(w.Body)
+		if err != nil {
+			return false
+		}
+		var questions []models.Question
+		err = json.Unmarshal(data, &questions)
+
+		return err == nil && len(questions) > 0 && s
+	})
+}
