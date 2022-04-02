@@ -1,6 +1,6 @@
 describe('Cypress test for sidebar', () => {
   it('loads the single question detail view page successfully', () => {
-    cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:3000/questions')
     cy.get('.question-answer > a').eq(0).click() 
 
     cy.get('.sidebar').should('be.visible')

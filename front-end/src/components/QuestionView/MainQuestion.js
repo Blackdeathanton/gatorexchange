@@ -6,8 +6,10 @@ import "react-quill/dist/quill.snow.css";
 import { Link } from 'react-router-dom';
 import "./index.css";
 import ReactHtmlParser from 'react-html-parser';
+import {useHistory} from 'react-router-dom';
 
 function MainQuestion() {
+    const history = useHistory();
     const [show, setShow] = useState(false)
     const [answer, setAnswer] = useState("")
     const [comment, setComment] = useState("")
@@ -20,16 +22,91 @@ function MainQuestion() {
         setAnswer(value)
     }
 
+    const handleQuestionUpvote = () => {
+        //TODO
+        if (!sessionStorage.getItem("token")){
+            history.push("/auth");
+            return;
+        }
+        const config = {
+            headers: {
+                "token": sessionStorage.getItem("token")
+            }
+        }
+
+        axios.post(`/api/v2/questions/${id}/vote/upvote`, {}, config).then((res) => {
+            history.push("/temp")
+            history.goBack()
+        }).catch((err) => console.log(err))
+    }
+    
+    const handleQuestionDownvote = () => {
+        //TODO
+        if (!sessionStorage.getItem("token")){
+            history.push("/auth");
+            return;
+        }
+        const config = {
+            headers: {
+                "token": sessionStorage.getItem("token")
+            }
+        }
+        axios.post(`/api/v2/questions/${id}/vote/downvote`, {}, config).then((res) => {
+            history.push("/temp")
+            history.goBack()
+        }).catch((err) => console.log(err))
+    }
+
+    const handleAnswerUpvote = (answerId) => {
+        //TODO
+        if (!sessionStorage.getItem("token")){
+            history.push("/auth");
+            return;
+        }
+        const config = {
+            headers: {
+                "token": sessionStorage.getItem("token")
+            }
+        }
+        axios.post(`/api/v3/questions/${id}/answers/${answerId}/vote/upvote`, {}, config).then((res) => {
+            history.push("/temp")
+            history.goBack()
+        }).catch((err) => console.log(err))
+    }
+    
+    const handleAnswerDownvote = (answerId) => {
+        //TODO
+        if (!sessionStorage.getItem("token")){
+            history.push("/auth");
+            return;
+        }
+        const config = {
+            headers: {
+                "token": sessionStorage.getItem("token")
+            }
+        }
+        axios.post(`/api/v3/questions/${id}/answers/${answerId}/vote/downvote`, {}, config).then((res) => {
+            history.push("/temp")
+            history.goBack()
+        }).catch((err) => console.log(err))
+    }
+
     const handleSubmit = async() => {
         if(answer !== "") {
+            //TODO
+            if (!sessionStorage.getItem("token")){
+                history.push("/auth");
+                return;
+            }
+
             const body = {
                 question_id: id,
                 body:  answer,
-                author: "default",
+                author: sessionStorage.getItem("username"),//TODO
             }
             const config = {
-                header: {
-                    "Content-type": "application/json"
+                headers: {
+                    "token": sessionStorage.getItem("token")
                 }
             }
 
@@ -44,13 +121,25 @@ function MainQuestion() {
 
     const handleComment = async() => {
         if (comment !== ""){
+            //TODO
+            if (!sessionStorage.getItem("token")){
+                history.push("/auth");
+                return;
+            }
+
             const body = {
                 question_id: id,
                 body: comment,
-                author: "default"
+                author: sessionStorage.getItem("username")
             }
 
-            await axios.post("/api/v2/comments", body).then((res) => {
+            const config = {
+                headers: {
+                    "token": sessionStorage.getItem("token")
+                }
+            }
+
+            await axios.post("/api/v2/comments", body, config).then((res) => {
                 console.log(res.data)
                 setComment("")
                 setShow(false)
@@ -61,7 +150,6 @@ function MainQuestion() {
     
     async function getUpdatedAnswer() {
         await axios.get(`api/v1/questions/${id}`).then((res) => {
-            console.log(res.data)
             setQuestionData(res.data)
         }).catch((err) => {
             console.log(err)
@@ -71,7 +159,6 @@ function MainQuestion() {
     useEffect(() => {
         async function getQuestionDetails() {
             await axios.get(`api/v1/questions/${id}`).then((res) => {
-                console.log(res.data)
                 setQuestionData(res.data)
             }).catch((err) => {
                 console.log(err)
@@ -98,9 +185,9 @@ function MainQuestion() {
                    <div className="question-body-container">
                        <div className="question-body-left">
                             <div className="all-options">
-                                <Link to="/"><p className="arrow">▲</p></Link>
+                                <p className="arrow" onClick={handleQuestionUpvote}>▲</p>
                                 <p className="arrow">{questionData?.upvotes - questionData?.downvotes}</p>
-                                <Link to="/"><p className="arrow">▼</p></Link>
+                                <p className="arrow" onClick={handleQuestionDownvote}>▼</p>
                            </div>
                        </div>
                        <div className="question-answer">
@@ -150,9 +237,9 @@ function MainQuestion() {
                         <div key={answer?.id} className="question-body-container">
                             <div className="question-body-left">
                             <div className="all-options">
-                                    <Link to="/"><p className="arrow">▲</p></Link>
-                                    <p className="arrow">0</p>
-                                    <Link to="/"><p className="arrow">▼</p></Link>
+                                    <p className="arrow" onClick={() => {handleAnswerUpvote(answer?.id)}}>▲</p>
+                                    <p className="arrow">{answer?.upvotes-answer?.downvotes}</p>
+                                    <p className="arrow" onClick={() => {handleAnswerDownvote(answer?.id)}}>▼</p>
                             </div>
                             </div>
                             <div className="question-answer">

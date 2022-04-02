@@ -1,6 +1,6 @@
 describe('Cypress test for sidebar', () => {
   it('loads the post question page succesfully', () => {
-    cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:3000/questions')
     // ask question button click
     cy.get('.all-questions-view-top > a > button').click()
     cy.get('.ask-question-container').should('be.visible')

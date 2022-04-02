@@ -1,0 +1,17 @@
+{
+  "parser": "@babel/eslint-parser",
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "overrides": [
+    {
+      "files": "*.test.js",
+      "globals": {
+        "shallow": true,
+        "render": true,
+        "mount": true
+      }
+    }
+  ]
+}
