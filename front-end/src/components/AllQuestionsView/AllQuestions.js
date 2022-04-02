@@ -4,7 +4,6 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 import QuestionCard from './QuestionCard';
 import "./css/AllQuestions.css";
 import {TagsInput} from 'react-tag-input-component';
-import "@pathofdev/react-tag-input/build/index.css";
 import { useHistory } from 'react-router-dom';
 
 export default function AllQuestions({questions}) {
