@@ -34,7 +34,7 @@ return (
                 <div className="all-tags-view-content">{
                     tagslist.map((tag, index) => (
                         <div className="tag-view-content" key={index}>
-                            <Link to={`/questions?q=_${encodeURIComponent(tag._id)}`}><div className="tagname">{tag._id}</div></Link>
+                            <Link to={`/questions?tag=${encodeURIComponent(tag._id)}`}><div className="tagname">{tag._id}</div></Link>
                             <div style={{marginBottom: "5px"}}>Sample description</div>
                             <div style={{marginBottom: "5px"}}>{tag.count} question(s)</div>
                         </div>

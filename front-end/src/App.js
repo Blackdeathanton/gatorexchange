@@ -40,7 +40,7 @@ function App() {
                 <Switch>
                     <Route exact path='/auth' component = {Auth}/>
                     <Route exact key='view-question' path='/question' component = {QuestionView}/>
-                    <Route exact key='all-questions' path='/questions/:id?' component = {AllQuestionsView}/>
+                    <Route exact key='all-questions' path='/questions/:id?/:tag?/:filters?/:sort?' component = {AllQuestionsView}/>
                     <Route exact path='/tags' component= {Tags}/>
                     <PrivateRoute exact path='/ask-question' component = {AskQuestion}/>
                 </Switch>

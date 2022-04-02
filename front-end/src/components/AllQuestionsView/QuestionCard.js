@@ -37,9 +37,9 @@ export default function QuestionCard({question, index}) {
                     <div style={{
                             display: "flex",
                         }}>
-                        {question?.tags.map((tag, index) => (
+                        {question?.tags.map((tag) => (
                             <>
-                                <Link to={`/questions?q=_${encodeURIComponent(tag)}`}><div className="tags">{tag}</div></Link>
+                                <Link to={`/questions?tag=${encodeURIComponent(tag)}`}><div className="tags">{tag}</div></Link>
                             </>
                         ))}
                     </div>
