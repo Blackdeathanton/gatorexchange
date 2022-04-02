@@ -26,9 +26,23 @@ export default function AllQuestions({questions}) {
 
     const handleApplyFilter = () => {
         let url = "/questions";
-        if (tags !== []){
+        let alreadyIncluded = false
+
+        if (tags.length > 0){
             url += "?tag=" + tags.join(' ')
+            alreadyIncluded = true;
         }
+        if (noAnswer && hasUpvotes){
+            url += alreadyIncluded ? "&filters=NoAnswer,HasUpvotes" : "?filters=NoAnswer,HasUpvotes";
+            alreadyIncluded = true
+        } else if (noAnswer){
+            url += alreadyIncluded ? "&filters=NoAnswer" : "?filters=NoAnswer";
+            alreadyIncluded = true
+        } else if (hasUpvotes){
+            url += alreadyIncluded ? "&filters=HasUpvotes" : "?filters=HasUpvotes";
+            alreadyIncluded = true
+        }
+        url += alreadyIncluded ? "&sort=" + sort : "?sort=" + sort;
         history.push(encodeURI(url))
     }
 
