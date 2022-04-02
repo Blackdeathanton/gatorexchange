@@ -60,6 +60,102 @@ button {
     width: 100%;
 }
 
+.main-filter {
+    display: flex;
+    align-items: center;
+}
+  
+.main-tabs {
+    display: flex;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    margin-right: 20px;
+    border-radius: 3px;
+}
+  
+.main-tab {
+    padding: 5px;
+    align-self: center;
+    border-right: 1px solid rgba(0, 0, 0, 0.4);
+}
+.main-tab > a {
+    font-size: small;
+}
+  
+.main-filter-item {
+    max-height: 23px;
+    display: flex;
+    padding: 5px;
+    border: 1px solid #0095ff;
+    border-radius: 3px;
+    background-color: #00ccff17;
+    font-size: small;
+    align-items: center;
+    color: #007cd4;
+    cursor: pointer;
+}
+
+.filter-options-main-container {
+    height: 216px;
+    background: #eee;
+}
+
+.filters-container {
+    display: flex;
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    margin-right: 20px;
+}
+
+.filter-container > legend {
+    padding: 0px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.filter-items {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5px;
+}
+
+.filter-item > input {
+    margin-top: 6px;
+    margin-right: 10px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+}
+
+.filter-item > p {
+    margin: 0px;
+    padding: 0px;
+}
+
+.filter-tag-container * {
+    background-color: #ddd;
+}
+
+.filters-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.filters-button {
+    align-self: center;
+    margin: 0px 10px;
+    cursor: pointer;
+}
+
 @media screen and (min-width: 768px) {
     .all-questions-view{
         flex: 0.6;
