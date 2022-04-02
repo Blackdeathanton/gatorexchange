@@ -17,4 +17,13 @@
 
 ### 4. Documentation
 
- - Wiki has been updated with all the new backend APIs written. Proper video working of each API has also been added
+ - Wiki has been updated with all the new backend APIs written. Proper video working of each API has also been added (https://github.com/Blackdeathanton/gatorexchange/wiki/Backend)
+
+
+### 5. Steps to run the project (Backend)
+1. Clone the project
+2. Move to the backend directory
+   ```cd backend```
+3. Create a file named ```.env``` in the current directory and add all the environmental variables to it.
+4. Use the following command to start the server ```go run main.go```
+ 
