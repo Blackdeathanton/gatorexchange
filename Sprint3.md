@@ -36,3 +36,8 @@
 3. Create a file named ```.env``` in the current directory and add all the environmental variables to it.
 4. Use the following command to start the server ```go run main.go```
  
+### 6. Steps to run the project (Frontend)
+1. Clone the project
+2. Move to the frontend directory ```cd front-end```
+3. Give ```npm install``` to install all dependencies
+4. Give ```npm start``` to start the React app
