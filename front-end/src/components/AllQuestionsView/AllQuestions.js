@@ -32,10 +32,10 @@ export default function AllQuestions({questions}) {
             alreadyIncluded = true;
         }
         if (noAnswer && hasUpvotes){
-            url += alreadyIncluded ? "&filters=NoAnswer,HasUpvotes" : "?filters=NoAnswer,HasUpvotes";
+            url += alreadyIncluded ? "&filters=NoAnswers,HasUpvotes" : "?filters=NoAnswers,HasUpvotes";
             alreadyIncluded = true
         } else if (noAnswer){
-            url += alreadyIncluded ? "&filters=NoAnswer" : "?filters=NoAnswer";
+            url += alreadyIncluded ? "&filters=NoAnswers" : "?filters=NoAnswers";
             alreadyIncluded = true
         } else if (hasUpvotes){
             url += alreadyIncluded ? "&filters=HasUpvotes" : "?filters=HasUpvotes";

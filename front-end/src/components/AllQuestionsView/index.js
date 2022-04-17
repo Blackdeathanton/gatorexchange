@@ -30,7 +30,7 @@ export default function Index() {
                 let alreadyIncluded = false
 
                 if (filter){
-                    url+="?filter="+filter
+                    url+="?filters="+filter
                     alreadyIncluded = true
                 }
                 if (sort) {
@@ -50,11 +50,11 @@ export default function Index() {
                         console.log(err);
                     });
             } else if (filter || sort){
-                let url = "/api/v3/questions"
+                let url = "/api/v1/questions"
                 let alreadyIncluded = false
 
                 if (filter){
-                    url+="?filter="+filter
+                    url+="?filters="+filter
                     alreadyIncluded = true
                 }
                 if (sort) {
@@ -84,70 +84,9 @@ export default function Index() {
                     console.log(err);
                 });
             }
-
-
-
-
-            // if(id?.length>0){
-            //     if(id[0] === '_') {
-            //         await axios
-            //             .get(`/api/v3/questions/tagged/${id.substring(1)}`)
-            //             .then((res) => {
-            //                 setQuestions(res.data);
-            //             })
-            //             .catch((err) => {
-            //                 console.log(err);
-            //             });
-            //     } 
-
-            //     // else if(id === "recent" || id === "views" || id === "upvotes") {
-            //     //     await axios
-            //     //         .get(`/api/v1/questions?sort=${id}`)
-            //     //         .then((res) => {
-            //     //             setQuestions(res.data);
-            //     //         })
-            //     //         .catch((err) => {
-            //     //             console.log(err);
-            //     //         });
-                    
-            //     // } 
-                
-            //     else {
-            //         await axios
-            //             .get(`/api/v2/search?q=${id}`)
-            //             .then((res) => {
-            //                 setQuestions(res.data);
-            //             })
-            //             .catch((err) => {
-            //                 console.log(err);
-            //             });
-            //     }
-            // } 
-            
-            // else if (tags){
-            //     await axios
-            //         .get(`/api/v3/questions/tagged/${tags}`)
-            //         .then((res) => {
-            //             setQuestions(res.data);
-            //         })
-            //         .catch((err) => {
-            //             console.log(err);
-            //         });
-            // }
-            
-            // else {
-            //     await axios
-            //     .get("/api/v1/questions")
-            //     .then((res) => {
-            //         setQuestions(res.data);
-            //     })
-            //     .catch((err) => {
-            //         console.log(err);
-            //     });
-            // }
         }
         getQuestion();
-    }, [id, tags]);
+    }, [id, tags, filter, sort]);
 
     return (
         <div className="all-questions-view-main">
