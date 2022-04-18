@@ -4,6 +4,7 @@ import (
 	"backend-v1/src/config"
 	"backend-v1/src/controllers"
 
+	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,6 +17,8 @@ func RunAPI(address string) error {
 
 	rest := gin.Default()
 	config.CreateConn()
+
+	rest.Use(static.Serve("/", static.LocalFile("./web", true)))
 
 	users := rest.Group("/api/users")
 	{
@@ -51,7 +54,7 @@ func RunAPI(address string) error {
 		// Fetch all the tags Api
 		v3_unauth.GET("/tags", controllers.GetAllTagsFromQuestions())
 	}
-		
+
 	rest.Use(config.Authentication())
 
 	v1_auth := rest.Group("/api/v1")
@@ -86,5 +89,5 @@ func RunAPI(address string) error {
 		v3_auth.POST("/questions/:id/answers/:aid/vote/:vote", controllers.UpdateAnswerVotes())
 	}
 
-	return rest.Run(address)
+	return rest.Run()
 }
