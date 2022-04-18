@@ -180,7 +180,21 @@ func GetQuestionByTags() gin.HandlerFunc {
 			"tags": bson.M{
 				"$all": tagsList,
 			}}
-		// var projection = bson.M{"answers": 0, "comments": 0}
+		
+		projection := bson.M{
+			"answers_count": bson.M{"$size": "$answers"}, 
+			"comments_count": bson.M{"$size": "$comments"}, 
+			"body": 1, 
+			"createdtime": 1, 
+			"downvotes": 1, 
+			"tags": 1, 
+			"title": 1, 
+			"updatedtime": 1, 
+			"upvotes": 1, "views": 1, 
+			"id": 1, 
+			"email": 1, 
+			"author": 1,
+		}
 		sort := bson.M{"createdtime": -1}
 		options := options.Find()
 
@@ -206,7 +220,7 @@ func GetQuestionByTags() gin.HandlerFunc {
 		}
 		
 		options.SetSort(sort)
-		// options.SetProjection(projection)
+		options.SetProjection(projection)
 
 		cursor, err := questionCollection.Find(ctx, filter, options)
 		if err != nil {
