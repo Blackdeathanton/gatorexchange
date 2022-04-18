@@ -194,6 +194,24 @@ function MainQuestion() {
         history.push('/edit-answer', data)
     }
 
+    const handleDeleteAnswer = async(answerId) => {
+        const config = {
+            headers: {
+                "token": sessionStorage.getItem("token")
+            }
+        }
+        await axios
+                .delete(`/api/v3/questions/${questionData.id}/answers/${answerId}`, config)
+                .then((res) => {
+                    alert("Answer deleted successfully");
+                    history.push('temp');
+                    history.goBack();
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+    }
+
     useEffect(() => {
         async function getQuestionDetails() {
             await axios.get(`api/v1/questions/${id}`).then((res) => {
@@ -298,6 +316,7 @@ function MainQuestion() {
                                     answer?.author === sessionStorage.getItem("username") && (
                                         <div className="answer-modify-options">
                                             <span onClick={() => {handleEditAnswer(answer?.id, answer?.body)}}>Edit</span>
+                                            <span onClick={() => {handleDeleteAnswer(answer?.id)}}>Delete</span>
                                         </div>
                                     )
                                 }
