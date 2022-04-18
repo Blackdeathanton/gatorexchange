@@ -166,6 +166,23 @@ function MainQuestion() {
         history.push('/ask-question', data)
     }
 
+    const handleDeleteQuestion = async() => {
+        const config = {
+            headers: {
+                "token": sessionStorage.getItem("token")
+            }
+        }
+        await axios
+                .delete(`/api/v2/questions/${questionData.id}`, config)
+                .then((res) => {
+                    alert("Question deleted successfully");
+                    history.push("/questions");
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+    }
+
     useEffect(() => {
         async function getQuestionDetails() {
             await axios.get(`api/v1/questions/${id}`).then((res) => {
@@ -210,6 +227,7 @@ function MainQuestion() {
                                 questionData?.author === sessionStorage.getItem("username") && (
                                     <div className="question-modify-options">
                                         <span onClick={handleEditQuestion}>Edit</span>
+                                        <span onClick={handleDeleteQuestion}>Delete</span>
                                     </div>
                                 )
                             }
