@@ -147,6 +147,13 @@ button {
     font-size: small;
     color: #0151f0d8;
   }
+
+  .question-modify-options > span {
+    margin-right: 10px;
+    font-size: small;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.4);
+  }
   
   .comments {
     margin: 10px 0;
@@ -183,8 +190,8 @@ button {
     color: rgba(0, 0, 0, 0.4);
   }
   
-  .comments > p:hover {
-    color: #0151f0a2;
+  .comments > p:hover, .question-modify-options > span:hover {
+    color: #010714;
   }
 
 /* .comments {
