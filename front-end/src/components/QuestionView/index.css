@@ -148,7 +148,7 @@ button {
     color: #0151f0d8;
   }
 
-  .question-modify-options > span {
+  .question-modify-options > span, .answer-modify-options > span {
     margin-right: 10px;
     font-size: small;
     cursor: pointer;
@@ -190,7 +190,7 @@ button {
     color: rgba(0, 0, 0, 0.4);
   }
   
-  .comments > p:hover, .question-modify-options > span:hover {
+  .comments > p:hover, .question-modify-options > span:hover, .answer-modify-options > span:hover {
     color: #010714;
   }
 

@@ -44,6 +44,8 @@ function App() {
                     <Route exact key='all-questions-filter' path='/questions/:tag?/:filters?/:sort?' component = {AllQuestionsView}/>
                     <Route exact path='/tags' component= {Tags}/>
                     <PrivateRoute exact path='/ask-question' component = {AskQuestion}/>
+                    <PrivateRoute exact path='/edit-question' component = {AskQuestion}/>
+                    <PrivateRoute exact path='/edit-answer' component = {AskQuestion}/>
                 </Switch>
             </Router>
         </div>

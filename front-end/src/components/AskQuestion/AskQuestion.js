@@ -13,6 +13,7 @@ export default function AskQuestion() {
     const history = useHistory();
     const [loading, setLoading] = useState(false);
     const [id, setId] = location.state ? useState(location.state.id) : useState("");
+    const [answerId, setAnswerId] = location.state ? useState(location.state.answerId) : useState("");
     const [title, setTitle] = location.state ? useState(location.state.title) : useState("");
     const [body, setBody] = location.state ? useState(location.state.body) : useState("");
     const [tags, setTags] = location.state ? useState(location.state.tags) : useState([]);
@@ -44,7 +45,7 @@ export default function AskQuestion() {
                 .then((res) => {
                     alert("Question added successfully");
                     setLoading(false);
-                    history.push("/questions");
+                    history.push(`/question?q=${res.data.InsertedID}`);
                 })
                 .catch((err) => {
                     setLoading(false);  
@@ -53,7 +54,7 @@ export default function AskQuestion() {
         }
     };
 
-    const handleSaveEdit = async (e) => {
+    const handleSaveEditQuestion = async (e) => {
         e.preventDefault();
     
         if (title !== "" && body !== "") {
@@ -76,7 +77,37 @@ export default function AskQuestion() {
                 .then((res) => {
                     alert("Question Updated successfully");
                     setLoading(false);
-                    history.push("/questions");
+                    history.push(`/question?q=${id}`);
+                })
+                .catch((err) => {
+                    setLoading(false);  
+                    console.log(err);
+                });
+        }
+    };
+
+    const handleSaveEditAnswer = async (e) => {
+        e.preventDefault();
+    
+        if (body !== "") {
+            setLoading(true)
+            const bodyJSON = {
+                //TODO:
+                author: sessionStorage.getItem("username"),
+                author_email: sessionStorage.getItem("email"),
+                body: body,
+            };
+            const config = {
+                headers: {
+                    "token": sessionStorage.getItem("token")
+                }
+            }
+            await axios
+                .post(`/api/v3/questions/${id}/answers/${answerId}/update`, bodyJSON, config)
+                .then((res) => {
+                    alert("Answer Updated successfully");
+                    setLoading(false);
+                    history.push(`/question?q=${id}`);
                 })
                 .catch((err) => {
                     setLoading(false);  
@@ -89,23 +120,27 @@ export default function AskQuestion() {
         <div className="ask-question">
             <div className="ask-question-container">
                 <div className="ask-question-top">
-                <h1>{ (title!=="") ? 'Edit a question' : ' Ask a public question'}</h1>
+                <h1>{ (location.state) ? ((location.state.type === 'question') ? 'Edit Question': 'Edit answer') : 'Ask a public question'}</h1>
                 </div>
                 <div className="question-container">
                     <div className="question-options">
                         <div className="question-option">
-                            <div className="title">
-                                <h3>Title</h3>
-                                <small>
-                                    Be specific and imagine you're asking a question to another person
-                                </small>
-                                <input 
-                                    value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
-                                    type="text" 
-                                    placeholder="Add question title"
-                                />
-                            </div>
+                            {
+                                (!location.state || location.state.type === 'question') && (
+                                    <div className="title">
+                                        <h3>Title</h3>
+                                        <small>
+                                            Be specific and imagine you're asking a question to another person
+                                        </small>
+                                        <input 
+                                            value={title}
+                                            onChange={(e) => setTitle(e.target.value)}
+                                            type="text" 
+                                            placeholder="Add question title"
+                                        />
+                                    </div>
+                                ) 
+                            }
                             <div className="title">
                                 <h3>Body</h3>
                                 <small>
@@ -119,24 +154,28 @@ export default function AskQuestion() {
                                     theme="snow"
                                 />
                             </div>
-                            <div className="title">
-                                <h3>Tags</h3>
-                                <small>
-                                    Add upto 5 tags to describe what your question is about
-                                </small>
-                                <TagsInput 
-                                    value={tags}
-                                    onChange={setTags}
-                                    name="tags" 
-                                    placeHolder="press enter to add new tag"
-                                />
-                            </div>
+                            {
+                                (!location.state || location.state.type === 'question') && (
+                                    <div className="title">
+                                        <h3>Tags</h3>
+                                        <small>
+                                            Add upto 5 tags to describe what your question is about
+                                        </small>
+                                        <TagsInput 
+                                            value={tags}
+                                            onChange={setTags}
+                                            name="tags" 
+                                            placeHolder="press enter to add new tag"
+                                        />
+                                    </div>
+                                )
+                            }
                         </div>
                     </div>
                 </div>
                 { location.state ? (
                     <>
-                        <button disabled={loading} type="submit" onClick={handleSaveEdit} className="button">{
+                        <button disabled={loading} type="submit" onClick={location.state.type==='question' ? handleSaveEditQuestion : handleSaveEditAnswer} className="button">{
                             loading ? 'Saving Edits...' : 'Save Edit'
                         }</button>
                     </>
