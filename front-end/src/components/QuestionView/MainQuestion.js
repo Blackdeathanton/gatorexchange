@@ -158,12 +158,13 @@ function MainQuestion() {
 
     const handleEditQuestion = () => {
         let data = {
+            type: "question",
             id: questionData?.id,
             title : questionData?.title,
             body: questionData?.body,
             tags: questionData?.tags
         }
-        history.push('/ask-question', data)
+        history.push('/edit-question', data)
     }
 
     const handleDeleteQuestion = async() => {
@@ -181,6 +182,16 @@ function MainQuestion() {
                 .catch((err) => {
                     console.log(err);
                 });
+    }
+
+    const handleEditAnswer = (answerId, body) => {
+        let data = {
+            type: "answer",
+            id: questionData?.id,
+            answerId: answerId,
+            body: body,
+        }
+        history.push('/edit-answer', data)
     }
 
     useEffect(() => {
@@ -278,11 +289,18 @@ function MainQuestion() {
                             </div>
                             </div>
                             <div className="question-answer">
-                            <p>{ReactHtmlParser(answer?.body)}</p>
-                            <div className="author">
-                                <small>Asked {new Date(answer?.createdtime).toLocaleString()}</small>
-                                <div className="author-details"><Avatar/><p>{answer?.author}</p></div>
-                            </div>
+                                <p>{ReactHtmlParser(answer?.body)}</p>
+                                <div className="author">
+                                    <small>Asked {new Date(answer?.createdtime).toLocaleString()}</small>
+                                    <div className="author-details"><Avatar/><p>{answer?.author}</p></div>
+                                </div>
+                                {
+                                    answer?.author === sessionStorage.getItem("username") && (
+                                        <div className="answer-modify-options">
+                                            <span onClick={() => {handleEditAnswer(answer?.id, answer?.body)}}>Edit</span>
+                                        </div>
+                                    )
+                                }
                             </div>
                         </div>
                         </>
