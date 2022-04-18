@@ -156,6 +156,33 @@ function MainQuestion() {
         })
     }
 
+    const handleEditQuestion = () => {
+        let data = {
+            id: questionData?.id,
+            title : questionData?.title,
+            body: questionData?.body,
+            tags: questionData?.tags
+        }
+        history.push('/ask-question', data)
+    }
+
+    const handleDeleteQuestion = async() => {
+        const config = {
+            headers: {
+                "token": sessionStorage.getItem("token")
+            }
+        }
+        await axios
+                .delete(`/api/v2/questions/${questionData.id}`, config)
+                .then((res) => {
+                    alert("Question deleted successfully");
+                    history.push("/questions");
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+    }
+
     useEffect(() => {
         async function getQuestionDetails() {
             await axios.get(`api/v1/questions/${id}`).then((res) => {
@@ -191,12 +218,20 @@ function MainQuestion() {
                            </div>
                        </div>
                        <div className="question-answer">
-                           <p>{ReactHtmlParser(questionData?.body)}</p>
-                           <div className="author">
+                            <p>{ReactHtmlParser(questionData?.body)}</p>
+                            <div className="author">
                                <small>Asked {new Date(questionData?.createdtime).toLocaleString()}</small>
                                <div className="author-details"><Avatar/><p>{questionData?.author}</p></div>
-                           </div>
-                           <div className="comments">
+                            </div>
+                            {
+                                questionData?.author === sessionStorage.getItem("username") && (
+                                    <div className="question-modify-options">
+                                        <span onClick={handleEditQuestion}>Edit</span>
+                                        <span onClick={handleDeleteQuestion}>Delete</span>
+                                    </div>
+                                )
+                            }
+                            <div className="comments">
                                <div className="comment">
                                     {
                                         questionData?.comments && questionData?.comments?.map((comment) => <p>
