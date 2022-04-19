@@ -19,6 +19,8 @@ func RunAPI(address string) error {
 	config.CreateConn()
 
 	rest.Use(static.Serve("/", static.LocalFile("./web", true)))
+	rest.Use(static.Serve("/questions", static.LocalFile("./web", true)))
+	rest.Use(static.Serve("/tags", static.LocalFile("./web", true)))
 
 	users := rest.Group("/api/users")
 	{
@@ -30,7 +32,7 @@ func RunAPI(address string) error {
 	{
 		v1_unauth.GET("/", func(c *gin.Context) {
 			c.JSON(200, gin.H{
-				"message": "Worked well!",
+				"message": "Worked well! Change working",
 			})
 		})
 		// GetAllQuestions()
