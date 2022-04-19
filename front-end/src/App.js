@@ -5,14 +5,12 @@ import AskQuestion from './components/AskQuestion/AskQuestion';
 import Auth from './components/Auth';
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import QuestionView from './components/QuestionView';
-import { useSelector } from "react-redux";
-import { selectUser } from "./features/userSlice";
 import Tags from './components/Tags';
 import UserProfile from './components/UserProfile';
 
 function App() {
 
-    const user = useSelector(selectUser);
+    //const user = useSelector(selectUser);
 
     const PrivateRoute = ({ component: Component, ...rest }) => (
         <Route
