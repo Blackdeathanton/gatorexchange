@@ -18,7 +18,7 @@ export default function QuestionCard({question, index}) {
                             <span>Votes</span>
                         </div>
                         <div className="all-option">
-                            <p>{question?.answers?.length}</p>
+                            <p>{question?.answers_count}</p>
                             <span>Answers</span>
                         </div>
                         <div className="all-option">
