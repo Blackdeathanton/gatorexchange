@@ -3,7 +3,7 @@ import "./index.css"
 import axios from "axios";
 import {useHistory} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login, logout } from "../../features/userSlice";
+import { login } from "../../features/userSlice";
 
 
 function Index() {

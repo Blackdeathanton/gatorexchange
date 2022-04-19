@@ -1,0 +1,148 @@
+.user-profile-main {
+    display: flex;
+    min-height: 85vh;
+    min-width: fit-content;
+}
+
+.user-profile-content {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.user-profile-view{
+    display: flex;
+    padding: 30px 10px;
+    flex: 0.75;
+    flex-direction: column;
+}
+
+.user-profile-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.user-profile-top {
+    display: flex;
+}
+
+.user-avatar{
+    margin: 10px;
+}
+
+.user-details {
+    margin: 10px;
+}
+
+.user-details > h2 {
+    margin: 5px 0 10px 0;
+} 
+
+.user-details > p {
+    margin: 0 0 3px 0;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 14px;
+}
+
+.user-profile-bottom {
+    display: flex;
+}
+
+.user-profile-left {
+    margin-right: 25px;
+}
+
+.user-profile-right {
+    width: 800px;
+}
+
+.user-profile-stats, .user-profile-tags{
+    margin: 10px;
+    width: 300px
+}
+
+.user-profile-stats > h2, .user-profile-tags > h2{
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.stats-container, .tags-container {
+    border-radius: 5px ;
+    border: 1.5px solid #ddd;
+}
+
+.stats-content, .tags-content {
+    display: flex;
+    margin: 5px;
+    flex-wrap: wrap;
+}
+
+.stats-item {
+    margin: 10px 35px 10px 10px;
+}
+
+.stats-item > div {
+    font-weight: 500;
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.stats-item > p {
+    margin: 5px 0 0 0;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.tagname {
+    width: fit-content;
+    margin: 0px 0px 5px 0px;
+    padding: 5px 10px;
+    background-color: #0151f03d;
+    border-radius: 3px;
+}
+
+.tag-item {
+    margin: 5px;
+}
+
+.user-profile-questions {
+    margin: 10px;
+
+}
+
+.user-profile-questions > h2 {
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.user-questions-container {
+    border-radius: 5px ;
+    border: 1.5px solid #ddd;
+}
+
+.question-item {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    justify-content: space-between;
+}
+
+.question-item > a {
+    color: #0151f0d8;
+    font-size: 1.1rem;
+}
+
+.question-item > p {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0;
+}
+
+@media screen and (min-width: 768px) {
+    .user-profile-view{
+        flex: 0.6;
+    }
+  }
+
