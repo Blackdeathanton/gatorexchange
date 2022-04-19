@@ -14,7 +14,7 @@ export default function QuestionCard({question, index}) {
                 <div className="question-left">
                     <div className="all-options">
                         <div className="all-option">
-                            <p>{question?.upvotes}</p>
+                            <p>{question?.upvotes - question?.downvotes}</p>
                             <span>Votes</span>
                         </div>
                         <div className="all-option">
