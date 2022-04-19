@@ -2,6 +2,7 @@ package config
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"time"
 
@@ -76,6 +77,8 @@ func ValidateToken(signedToken string) (claims *TokenDetails, msg string) {
 
 	claims, ok := token.Claims.(*TokenDetails)
 	if !ok || claims.ExpiresAt < time.Now().Local().Unix() {
+		msg = "Expired"
+		fmt.Println("Token expired")
 		return
 	}
 
@@ -92,18 +95,25 @@ func UpdateAllTokens(signedToken string, signedRefreshToken string, userId strin
 	var updateObj primitive.D
 
 	updateObj = append(updateObj, bson.E{"token", signedToken})
-	updateObj = append(updateObj, bson.E{"refresh_token", signedRefreshToken})
+	updateObj = append(updateObj, bson.E{"refreshtoken", signedRefreshToken})
 
 	updateTime := time.Now()
-	updateObj = append(updateObj, bson.E{"updated_time", updateTime})
+	updateObj = append(updateObj, bson.E{"updatedtime", updateTime})
 
 	upsert := true
-	filter := bson.M{"id": userId}
+
+	objID, err := primitive.ObjectIDFromHex(userId)
+	if err != nil {
+		log.Panic(err)
+		return
+	}
+
+	filter := bson.M{"id": objID}
 	opt := options.UpdateOptions{
 		Upsert: &upsert,
 	}
 
-	_, err := userCollection.UpdateOne(
+	_, err = userCollection.UpdateOne(
 		ctx,
 		filter,
 		bson.D{
