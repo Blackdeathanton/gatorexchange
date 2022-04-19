@@ -45,6 +45,18 @@
     font-size: 14px;
 }
 
+.user-profile-bottom {
+    display: flex;
+}
+
+.user-profile-left {
+    margin-right: 25px;
+}
+
+.user-profile-right {
+    width: 800px;
+}
+
 .user-profile-stats, .user-profile-tags{
     margin: 10px;
     width: 300px
@@ -92,6 +104,40 @@
 
 .tag-item {
     margin: 5px;
+}
+
+.user-profile-questions {
+    margin: 10px;
+
+}
+
+.user-profile-questions > h2 {
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.user-questions-container {
+    border-radius: 5px ;
+    border: 1.5px solid #ddd;
+}
+
+.question-item {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    justify-content: space-between;
+}
+
+.question-item > a {
+    color: #0151f0d8;
+    font-size: 1.1rem;
+}
+
+.question-item > p {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0;
 }
 
 @media screen and (min-width: 768px) {

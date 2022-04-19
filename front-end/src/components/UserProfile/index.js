@@ -49,44 +49,62 @@ export default function UserProfile() {
                                 <p>Member since {userDetails?.createdtime?.substring(0,10)}</p>
                             </div>
                         </div>
-
-                        {/* Stats section */}
-                        <div className="user-profile-stats">
-                            <h2>Stats</h2>
-                            <div className="stats-container">
-                                <div className="stats-content">
-                                    <div className="stats-item">
-                                        <div>{userDetails?.questions?.length}</div>
-                                        <p>Questions</p>
-                                    </div>
-                                    <div className="stats-item">
-                                        <div>{userDetails?.answers?.length}</div>
-                                        <p>Answers</p>
-                                    </div>
-                                    <div className="stats-item">
-                                        <div>{userDetails?.tags?.length}</div>
-                                        <p>Tags</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Tags Section */}
-                        <div className="user-profile-tags">
-                            <h2>Tags</h2>
-                            <div className="tags-container">
-                                <div className="tags-content">
-                                    {    
-                                        userDetails?.tags?.map((tag, index) => (
-                                        <div className="tag-item" key={index}>
-                                            <Link to={`/questions?tag=${encodeURIComponent(tag._id)}`}><div className="tagname">{tag._id}</div></Link>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-
                         
+                        <div className="user-profile-bottom">
+                          <div className="user-profile-left">
+                            {/* Stats section */}
+                            <div className="user-profile-stats">
+                                <h2>Stats</h2>
+                                <div className="stats-container">
+                                    <div className="stats-content">
+                                        <div className="stats-item">
+                                            <div>{userDetails?.questions?.length}</div>
+                                            <p>Questions</p>
+                                        </div>
+                                        <div className="stats-item">
+                                            <div>{userDetails?.answers?.length}</div>
+                                            <p>Answers</p>
+                                        </div>
+                                        <div className="stats-item">
+                                            <div>{userDetails?.tags?.length}</div>
+                                            <p>Tags</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Tags Section */}
+                            <div className="user-profile-tags">
+                                <h2>Tags</h2>
+                                <div className="tags-container">
+                                    <div className="tags-content">
+                                        {    
+                                            userDetails?.tags?.map((tag, index) => (
+                                            <div className="tag-item" key={index}>
+                                                <Link to={`/questions?tag=${encodeURIComponent(tag._id)}`}><div className="tagname">{tag._id}</div></Link>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                          <div className="user-profile-right">
+                            <div className="user-profile-questions">
+                                <h2>Questions</h2>
+                                <div className="user-questions-container">
+                                    <div className="user-questions-content">
+                                        {    
+                                            userDetails?.questions?.map((question, index) => (
+                                            <div className="question-item" key={index}>
+                                                <Link to={`/question?q=${encodeURIComponent(question.id)}`}>{question.title}</Link>
+                                                <p>{question.createdtime.substring(0,10)}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
                     </div>
                 </div>
             </div>
