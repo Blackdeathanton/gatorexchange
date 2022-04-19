@@ -20,6 +20,7 @@ func RunAPI(address string) error {
 
 	rest.Use(static.Serve("/", static.LocalFile("./web", true)))
 	rest.Use(static.Serve("/questions", static.LocalFile("./web", true)))
+	rest.Use(static.Serve("/question", static.LocalFile("./web", true)))
 	rest.Use(static.Serve("/tags", static.LocalFile("./web", true)))
 
 	users := rest.Group("/api/users")
