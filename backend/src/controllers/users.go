@@ -150,3 +150,80 @@ func LoginUser() gin.HandlerFunc {
 		c.JSON(http.StatusOK, foundUser)
 	}
 }
+
+func GetUserData() gin.HandlerFunc {
+	return func(con *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
+
+		username := con.Param("user")
+		projection := bson.M{
+			"$project": bson.M{
+				"_id":                0,
+				"password":           0,
+				"refreshtoken":       0,
+				"token":              0,
+				"updatedtime":        0,
+				"questions.answers":  0,
+				"questions.comments": 0,
+				"questions._id":      0,
+				"questions.author":   0,
+				"questions.email":    0,
+			},
+		}
+		var match = bson.M{
+			"$match": bson.M{"username": username},
+		}
+		var lookup_questions = bson.M{
+			"$lookup": bson.M{
+				"from":         "questions",
+				"localField":   "username",
+				"foreignField": "author",
+				"as":           "questions",
+			}}
+		var answer_pipeline = []bson.M{
+			{"$unwind": "$answers"},
+			{"$match": bson.M{"answers.author": username}},
+			{"$replaceRoot": bson.M{"newRoot": "$answers"}},
+			{"$project": bson.M{"comments": 0, "author": 0}},
+		}
+		var tag_pipeline = []bson.M{
+			{"$unwind": "$tags"},
+			{"$match": bson.M{"author": username}},
+			{"$group": bson.M{"_id": "$tags"}},
+		}
+		var lookup_answers = bson.M{
+			"$lookup": bson.M{
+				"from":     "questions",
+				"pipeline": answer_pipeline,
+				"as":       "answers",
+			}}
+		var lookup_tags = bson.M{
+			"$lookup": bson.M{
+				"from":     "questions",
+				"pipeline": tag_pipeline,
+				"as":       "tags",
+			}}
+		var pipeline = []bson.M{
+			match,
+			lookup_questions,
+			lookup_answers,
+			lookup_tags,
+			projection,
+		}
+
+		cursor, err := userCollection.Aggregate(ctx, pipeline)
+		if err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "An Error Occurred"})
+			return
+		}
+
+		var userdata []bson.M
+		if err = cursor.All(ctx, &userdata); err != nil {
+			con.JSON(http.StatusInternalServerError, gin.H{"error": "Error reading data"})
+			return
+		}
+
+		con.JSON(http.StatusOK, userdata)
+	}
+}

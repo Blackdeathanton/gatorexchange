@@ -55,6 +55,13 @@ func RunAPI(address string) error {
 		v3_unauth.GET("/tags", controllers.GetAllTagsFromQuestions())
 	}
 
+	// v4 unauth APIs
+	v4_unauth := rest.Group("/api/v4")
+	{
+		// Fetch data of an user
+		v4_unauth.GET("/users/:user", controllers.GetUserData())
+	}
+
 	rest.Use(config.Authentication())
 
 	v1_auth := rest.Group("/api/v1")
@@ -63,7 +70,7 @@ func RunAPI(address string) error {
 		v1_auth.POST("/questions", controllers.AddQuestion())
 	}
 
-	// v2_unauth APIs
+	// v2_auth APIs
 	v2_auth := rest.Group("/api/v2")
 	{
 		// Delete a question with an ID
