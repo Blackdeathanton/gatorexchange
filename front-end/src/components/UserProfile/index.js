@@ -88,6 +88,8 @@ export default function UserProfile() {
                                 </div>
                             </div>
                           </div>
+
+                          {/* User profile page right side view with questions list*/}
                           <div className="user-profile-right">
                             <div className="user-profile-questions">
                                 <h2>Questions</h2>
@@ -104,6 +106,7 @@ export default function UserProfile() {
                                 </div>
                             </div>
                           </div>
+                          
                         </div>
                     </div>
                 </div>
