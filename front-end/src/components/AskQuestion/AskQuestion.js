@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {TagsInput} from 'react-tag-input-component';
@@ -11,12 +11,18 @@ export default function AskQuestion() {
     const location = useLocation();
     
     const history = useHistory();
+    const qid = location.state ? location.state.id : "";
+    const aid = location.state ? location.state.answerId : "";
+    const qtitle = location.state ? location.state.title : "";
+    const qbody = location.state ? location.state.body : "";
+    const qtags = location.state ? location.state.tags : [];
+
     const [loading, setLoading] = useState(false);
-    const [id, setId] = location.state ? useState(location.state.id) : useState("");
-    const [answerId, setAnswerId] = location.state ? useState(location.state.answerId) : useState("");
-    const [title, setTitle] = location.state ? useState(location.state.title) : useState("");
-    const [body, setBody] = location.state ? useState(location.state.body) : useState("");
-    const [tags, setTags] = location.state ? useState(location.state.tags) : useState([]);
+    const [id, setId] = useState(qid);
+    const [answerId, setAnswerId] = useState(aid);
+    const [title, setTitle] = useState(qtitle);
+    const [body, setBody] = useState(qbody);
+    const [tags, setTags] = useState(qtags);
 
     const handleQuill = (value) => {
         setBody(value);

@@ -5,13 +5,12 @@ import AskQuestion from './components/AskQuestion/AskQuestion';
 import Auth from './components/Auth';
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import QuestionView from './components/QuestionView';
-import { useSelector } from "react-redux";
-import { selectUser } from "./features/userSlice";
 import Tags from './components/Tags';
+import UserProfile from './components/UserProfile';
 
 function App() {
 
-    const user = useSelector(selectUser);
+    //const user = useSelector(selectUser);
 
     const PrivateRoute = ({ component: Component, ...rest }) => (
         <Route
@@ -43,6 +42,7 @@ function App() {
                     <Route exact key='all-questions-search' path='/questions/:id?' component = {AllQuestionsView}/>
                     <Route exact key='all-questions-filter' path='/questions/:tag?/:filters?/:sort?' component = {AllQuestionsView}/>
                     <Route exact path='/tags' component= {Tags}/>
+                    <Route exact path='/user/:name?' component= {UserProfile}/>
                     <PrivateRoute exact path='/ask-question' component = {AskQuestion}/>
                     <PrivateRoute exact path='/edit-question' component = {AskQuestion}/>
                     <PrivateRoute exact path='/edit-answer' component = {AskQuestion}/>

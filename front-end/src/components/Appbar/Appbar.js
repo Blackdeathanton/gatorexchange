@@ -27,6 +27,10 @@ function Appbar() {
         dispatch(logout());
     }
 
+    const redirectToUserProfile = () => {
+        history.push(`/user?q=${sessionStorage.getItem("username")}`);
+    }
+
     return (
         <header>
             <div className="header-container">
@@ -56,9 +60,10 @@ function Appbar() {
                                     {window.innerWidth < 768 && <SearchIcon />}
 
                                     <Avatar
-                                    style={{
-                                        cursor: "pointer",
-                                    }}
+                                        style={{
+                                            cursor: "pointer",
+                                        }}
+                                        onClick={redirectToUserProfile}
                                     />
                                     <PowerSettingsNewIcon onClick={() => logOut()}/>        
                                 </>
