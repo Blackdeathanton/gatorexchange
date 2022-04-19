@@ -8,6 +8,7 @@ import QuestionView from './components/QuestionView';
 import { useSelector } from "react-redux";
 import { selectUser } from "./features/userSlice";
 import Tags from './components/Tags';
+import UserProfile from './components/UserProfile';
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
                     <Route exact key='all-questions-search' path='/questions/:id?' component = {AllQuestionsView}/>
                     <Route exact key='all-questions-filter' path='/questions/:tag?/:filters?/:sort?' component = {AllQuestionsView}/>
                     <Route exact path='/tags' component= {Tags}/>
+                    <Route exact path='/user/:name?' component= {UserProfile}/>
                     <PrivateRoute exact path='/ask-question' component = {AskQuestion}/>
                     <PrivateRoute exact path='/edit-question' component = {AskQuestion}/>
                     <PrivateRoute exact path='/edit-answer' component = {AskQuestion}/>
