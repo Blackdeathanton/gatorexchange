@@ -7,6 +7,8 @@
 GatorExchange is an application that serves as a platform for users to ask and answer questions, through membership and active participation, to vote questions and answers up or down similar to Reddit and edit questions and answers in a fashion similar to a wiki. 
 The Frontend for this application is developed using ReactJS framework and the Backend is developed using Go. 
 
+Link to [GatorExchange](https://gatorexchange.herokuapp.com)
+
 ---
 
 ## Team Members
@@ -47,6 +49,15 @@ The platform supports the following functionalities depending upon the type of t
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 
+## Demo
 
+## Cypress Test
 
+## Backend Unit Test
+
+## Others
+
+ - [API Documentation](https://github.com/Blackdeathanton/gatorexchange/wiki/Backend)
+ - [Project Boards](https://github.com/Blackdeathanton/gatorexchange/projects)
+ - [Sprint 4 Deliverables](https://github.com/Blackdeathanton/gatorexchange/blob/master/Sprint4.md)
 
