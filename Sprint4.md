@@ -8,6 +8,8 @@
 
 ### 2. Backend Functionalities Implemented
 
+ - Implemented an API to fetch all the questions, answers and tags posted by an user
+ - Implemented an API to delete comments, posted in questions and answers 
 
 ### 3. Frontend Functionalities Implemented
 
