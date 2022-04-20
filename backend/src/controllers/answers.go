@@ -39,6 +39,7 @@ func AddAnswer() gin.HandlerFunc {
 		answer.Id = primitive.NewObjectID()
 		answer.CreatedTime = time.Now()
 		answer.UpdatedTime = time.Now()
+		answer.Comments = []models.Comment{}
 		var filter = bson.M{"id": questionId}
 		var update = bson.M{
 			"$push": bson.M{
