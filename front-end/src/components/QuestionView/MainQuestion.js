@@ -212,6 +212,10 @@ function MainQuestion() {
                 });
     }
 
+    const redirectToUserProfile = (username) => {
+        history.push(`/user?q=${username}`);
+    }
+
     useEffect(() => {
         async function getQuestionDetails() {
             await axios.get(`api/v1/questions/${id}`).then((res) => {
@@ -250,7 +254,12 @@ function MainQuestion() {
                             <p>{ReactHtmlParser(questionData?.body)}</p>
                             <div className="author">
                                <small>Asked {new Date(questionData?.createdtime).toLocaleString()}</small>
-                               <div className="author-details"><Avatar/><p>{questionData?.author}</p></div>
+                               <div className="author-details">
+                                   <Avatar 
+                                        style={{cursor: "pointer"}}
+                                        onClick={() => {redirectToUserProfile(questionData?.author)}}
+                                    />
+                                    <p>{questionData?.author}</p></div>
                             </div>
                             {
                                 questionData?.author === sessionStorage.getItem("username") && (
@@ -310,8 +319,13 @@ function MainQuestion() {
                                 <p>{ReactHtmlParser(answer?.body)}</p>
                                 <div className="author">
                                     <small>Asked {new Date(answer?.createdtime).toLocaleString()}</small>
-                                    <div className="author-details"><Avatar/><p>{answer?.author}</p></div>
-                                </div>
+                                    <div className="author-details">
+                                        <Avatar 
+                                            style={{cursor: "pointer"}}
+                                            onClick={() => {redirectToUserProfile(questionData?.author)}}
+                                        />
+                                        <p>{answer?.author}</p></div>
+                                    </div>
                                 {
                                     answer?.author === sessionStorage.getItem("username") && (
                                         <div className="answer-modify-options">
