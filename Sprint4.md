@@ -39,4 +39,4 @@
 
 ### 8. Deployment
 1. The docker image has been deployed in Heroku
-2. https://www.gatorexchange.herokuapp.com
+2. https://gatorexchange.herokuapp.com
