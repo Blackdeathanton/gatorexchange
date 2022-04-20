@@ -4,7 +4,8 @@
 
 ### 1. Sprint Board
 
- - All the backend tasks were properly managed in the Sprint 4 board and the proper lifecycle has been followed
+ - All the backend tasks were properly managed in the Sprint 4 board and the proper lifecycle has been followed.
+ - All the frontend development tasks were managed using the Sprint 4 board under Projects tab. The proper lifecycle of issue creation, development, updating progress state, linking pull request with tasks, reviewing and merging code and pushing tasks to Done was followed correctly.
 
 ### 2. Backend Functionalities Implemented
 
@@ -12,11 +13,17 @@
  - Implemented an API to delete comments, posted in questions and answers 
 
 ### 3. Frontend Functionalities Implemented
-
+ - Implemented a user profile page
+ - Added edit and delete options for question 
+ - Added edit and delete options for answer
+ - Enhanced the filter and sort functionality of questions
+ - Fixed the vote count calculation issue in question card
+ - Added cypress tests for all the newly added features 
 
 ### 4. Documentation
 
  - Wiki has been updated with all the new backend APIs written. Proper video working of each API has also been added (https://github.com/Blackdeathanton/gatorexchange/wiki/Backend)
+ - Proper documentation with detailed feature description along with demo videos for all the frontend features developed and integrated in Sprint 3 have been added to the Wiki(https://github.com/Blackdeathanton/gatorexchange/wiki/Frontend)
 
 ### 5. Steps to run the project (Backend)
 1. Clone the project
