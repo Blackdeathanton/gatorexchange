@@ -143,11 +143,12 @@ export default function AskQuestion() {
                                             onChange={(e) => setTitle(e.target.value)}
                                             type="text" 
                                             placeholder="Add question title"
+                                            data-testid="ask-ques-title"
                                         />
                                     </div>
                                 ) 
                             }
-                            <div className="title">
+                            <div className="title" data-testid="ask-ques-body">
                                 <h3>Body</h3>
                                 <small>
                                     Include all the information someone would need to answer your question
@@ -181,7 +182,7 @@ export default function AskQuestion() {
                 </div>
                 { location.state ? (
                     <>
-                        <button disabled={loading} type="submit" onClick={location.state.type==='question' ? handleSaveEditQuestion : handleSaveEditAnswer} className="button">{
+                        <button disabled={loading} type="submit" data-testid="save-edit" onClick={location.state.type==='question' ? handleSaveEditQuestion : handleSaveEditAnswer} className="button">{
                             loading ? 'Saving Edits...' : 'Save Edit'
                         }</button>
                     </>

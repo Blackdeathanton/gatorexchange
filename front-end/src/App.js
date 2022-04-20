@@ -39,6 +39,7 @@ function App() {
                 <Switch>
                     <Route exact path='/auth' component = {Auth}/>
                     <Route exact key='view-question' path='/question' component = {QuestionView}/>
+                    <Route exact key='all-questions-view' path='/' component = {AllQuestionsView}/>
                     <Route exact key='all-questions-search' path='/questions/:id?' component = {AllQuestionsView}/>
                     <Route exact key='all-questions-filter' path='/questions/:tag?/:filters?/:sort?' component = {AllQuestionsView}/>
                     <Route exact path='/tags' component= {Tags}/>
