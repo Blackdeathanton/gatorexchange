@@ -55,6 +55,8 @@ The platform supports the following functionalities depending upon the type of t
 
 ## Backend Unit Test
 
+![](https://github.com/Blackdeathanton/gatorexchange/blob/master/resources/images/backend/Tests.gif)
+
 ## Others
 
  - [API Documentation](https://github.com/Blackdeathanton/gatorexchange/wiki/Backend)
