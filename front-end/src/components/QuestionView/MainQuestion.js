@@ -294,7 +294,7 @@ function MainQuestion() {
                    </div>
                </div>
                <div style={{flexDirection:"column"}} className="question-body">
-                   <p style={{marginBottom:"20px", fontSize:"1.3rem", fontWeight:"300"}}>{questionData?.answers?.length} Answer(s)</p>
+                   <p data-testid="answers-count" style={{marginBottom:"20px", fontSize:"1.3rem", fontWeight:"300"}}>{questionData?.answers?.length} Answer(s)</p>
                     {
                        questionData?.answers?.map((answer) => (
                         <>
@@ -315,8 +315,8 @@ function MainQuestion() {
                                 {
                                     answer?.author === sessionStorage.getItem("username") && (
                                         <div className="answer-modify-options">
-                                            <span onClick={() => {handleEditAnswer(answer?.id, answer?.body)}}>Edit</span>
-                                            <span onClick={() => {handleDeleteAnswer(answer?.id)}}>Delete</span>
+                                            <span data-testid="edit-answer" onClick={() => {handleEditAnswer(answer?.id, answer?.body)}}>Edit</span>
+                                            <span data-testid="delete-answer" onClick={() => {handleDeleteAnswer(answer?.id)}}>Delete</span>
                                         </div>
                                     )
                                 }
@@ -332,7 +332,7 @@ function MainQuestion() {
                <h3 style={{fontSize: "22px", margin:"10px 0", fontWeight:"400"}}>Your answer</h3>
                <ReactQuill className="react-quill" theme="snow" style={{height: "200px"}} value={answer} onChange={handleQuill}/>
            </div>
-           <button type="submit" onClick={handleSubmit} style={{maxWidth:"fit-content", marginTop:"50px"}}>Post your answer</button>
+           <button data-testid="post-answer-button" type="submit" onClick={handleSubmit} style={{maxWidth:"fit-content", marginTop:"50px"}}>Post your answer</button>
         </div>
     );
 }
