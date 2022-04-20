@@ -1,4 +1,4 @@
-describe('Cypress test for sidebar', () => {
+describe('Cypress test for a question view', () => {
   it('loads the single question detail view page successfully', () => {
     cy.visit('http://localhost:3000/questions')
     cy.get('.question-answer > a').eq(0).click() 
@@ -10,5 +10,33 @@ describe('Cypress test for sidebar', () => {
 
     cy.get('.main-answer').should('be.visible').should('contain.text', 'Your answer')
     cy.get('button').should('be.visible').should('contain.text', 'Post your answer')
+  })
+});
+
+describe('Cypress test for a edit and delete question', () => {
+  it('editing a question is done successfully', () => {
+    cy.visit('http://localhost:3000/questions')
+
+    // logging in 
+    cy.get('.header-right-container > a').click()
+    cy.get('[data-testid="login-email"]').type("admin1@abc.com")
+    cy.get('[data-testid="login-password"]').type("admin1234")
+    cy.get('.auth-login-container > button').click()
+
+    // post a sample question
+    cy.get('.all-questions-view-top > a > button').click()
+    cy.get('[data-testid="ask-ques-title"]').type("Test-title")
+    cy.get('[data-testid="ask-ques-body"] > .react-quill .ql-container').type("Test-body")
+    cy.get('.ask-question-container > button').click()
+
+    cy.get('[data-testid="edit-question"]').click()
+    cy.get('[data-testid="save-edit"]').click()
+    cy.get('.main-question-container').should('be.visible', 'Question updated successfully') 
+
+    cy.get('[data-testid="delete-question"]').click()
+    cy.get('.all-questions-view').should('be.visible', 'Question deleted successfully')
+
+    //logging out 
+    cy.get('[data-testid="PowerSettingsNewIcon"]').click()
   })
 });

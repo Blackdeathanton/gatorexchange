@@ -1,4 +1,4 @@
-describe('Cypress test for sidebar', () => {
+describe('Cypress test for post question', () => {
   it('loads the post question page succesfully', () => {
     cy.visit('http://localhost:3000/questions')
     // ask question button click

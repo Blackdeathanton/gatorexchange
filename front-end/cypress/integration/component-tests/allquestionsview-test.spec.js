@@ -1,4 +1,4 @@
-describe('Cypress test for sidebar', () => {
+describe('Cypress test for questions list', () => {
   it('loads succesfully with question cards displayed', () => {
     cy.visit('http://localhost:3000/questions')
     cy.get('.all-questions-view').should('be.visible')

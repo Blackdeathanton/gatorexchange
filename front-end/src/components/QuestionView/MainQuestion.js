@@ -255,8 +255,8 @@ function MainQuestion() {
                             {
                                 questionData?.author === sessionStorage.getItem("username") && (
                                     <div className="question-modify-options">
-                                        <span onClick={handleEditQuestion}>Edit</span>
-                                        <span onClick={handleDeleteQuestion}>Delete</span>
+                                        <span data-testid="edit-question" onClick={handleEditQuestion}>Edit</span>
+                                        <span data-testid="delete-question" onClick={handleDeleteQuestion}>Delete</span>
                                     </div>
                                 )
                             }
