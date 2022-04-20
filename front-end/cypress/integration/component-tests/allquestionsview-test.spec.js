@@ -1,4 +1,4 @@
-describe('Cypress test for sidebar', () => {
+describe('Cypress test for questions list', () => {
   it('loads succesfully with question cards displayed', () => {
     cy.visit('http://localhost:3000/questions')
     cy.get('.all-questions-view').should('be.visible')
@@ -11,7 +11,7 @@ describe('Cypress test for sidebar', () => {
 
     // ask question button click test
     cy.get('.all-questions-view-top > a > button').click()
-    cy.get('.ask-question-container').should('be.visible')
+    cy.get('.auth-login-container').should('be.visible')
     cy.get('.header-left > a').click()
 
     // click question card test
