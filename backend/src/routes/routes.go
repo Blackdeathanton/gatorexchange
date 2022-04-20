@@ -83,7 +83,7 @@ func RunAPI(address string) error {
 		v2_auth.POST("/questions/:id/vote/:vote", controllers.UpdateVotes())
 	}
 
-	// v3 APIs
+	// v3 auth APIs
 	v3_auth := rest.Group("/api/v3")
 	{
 		// Update Question Data Api
@@ -94,6 +94,14 @@ func RunAPI(address string) error {
 		v3_auth.DELETE("/questions/:id/answers/:aid", controllers.DeleteAnswerById())
 		// Update Upvote and Downvote count for Answers Api
 		v3_auth.POST("/questions/:id/answers/:aid/vote/:vote", controllers.UpdateAnswerVotes())
+	}
+
+	// v4 auth APIs
+	v4_auth := rest.Group("/api/v4")
+	{
+		// Delete a Comment with Id Api
+		v4_auth.DELETE("/questions/:id/comments/:cid", controllers.DeleteCommentById())
+		v4_auth.DELETE("/questions/:id/answers/:aid/comments/:cid", controllers.DeleteCommentById())
 	}
 
 	return rest.Run()
