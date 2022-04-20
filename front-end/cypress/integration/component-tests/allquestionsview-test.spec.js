@@ -11,7 +11,7 @@ describe('Cypress test for questions list', () => {
 
     // ask question button click test
     cy.get('.all-questions-view-top > a > button').click()
-    cy.get('.ask-question-container').should('be.visible')
+    cy.get('.auth-login-container').should('be.visible')
     cy.get('.header-left > a').click()
 
     // click question card test
