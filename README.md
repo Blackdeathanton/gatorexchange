@@ -49,6 +49,38 @@ The platform supports the following functionalities depending upon the type of t
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 
 ## Demo
+### User registration
+![](https://github.com/Blackdeathanton/gatorexchange/blob/master/resources/images/frontend/sprint3/user-authentication.gif)
+
+### User profile
+![](https://github.com/Blackdeathanton/gatorexchange/raw/master/resources/images/frontend/sprint4/user-profile-page.gif)
+
+### View all questions
+![](https://github.com/Blackdeathanton/gatorexchange/raw/master/resources/images/frontend/sprint3/all-questions-tag.gif)
+
+### Filter and sort questions
+![](https://github.com/Blackdeathanton/gatorexchange/raw/master/resources/images/frontend/sprint3/filter.gif)
+
+### Search questions
+![](https://github.com/Blackdeathanton/gatorexchange/raw/master/resources/images/frontend/sprint3/search.gif)
+
+### Ask question
+![](https://github.com/Blackdeathanton/gatorexchange/raw/master/resources/images/frontend/sprint2/ask-question.gif)
+
+### Post answers and comments
+![](https://github.com/Blackdeathanton/gatorexchange/raw/master/resources/images/frontend/sprint2/add-answer-comment.gif)
+
+### Vote questions and answers
+![](https://github.com/Blackdeathanton/gatorexchange/raw/master/resources/images/frontend/sprint3/upvote-downvote-with-login.gif)
+
+### All tags
+![](https://github.com/Blackdeathanton/gatorexchange/raw/master/resources/images/frontend/sprint3/tags-page.gif)
+
+### Edit/Delete questions
+![](https://github.com/Blackdeathanton/gatorexchange/raw/master/resources/images/frontend/sprint4/edit-delete-question.gif)
+
+### Edit/Delete answers
+![](https://github.com/Blackdeathanton/gatorexchange/raw/master/resources/images/frontend/sprint4/edit-delete-answer.gif)
 
 ## Cypress Test
 
