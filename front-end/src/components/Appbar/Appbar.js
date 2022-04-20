@@ -60,6 +60,7 @@ function Appbar() {
                                     {window.innerWidth < 768 && <SearchIcon />}
 
                                     <Avatar
+                                        data-testid="user-profile"
                                         style={{
                                             cursor: "pointer",
                                         }}
