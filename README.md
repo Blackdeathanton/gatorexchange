@@ -83,9 +83,9 @@ The platform supports the following functionalities depending upon the type of t
 ![](https://github.com/Blackdeathanton/gatorexchange/raw/master/resources/images/frontend/sprint4/edit-delete-answer.gif)
 
 ## Cypress Test
+![](https://github.com/Blackdeathanton/gatorexchange/raw/master/resources/images/frontend/cypress/Cypress-tests.gif)
 
 ## Backend Unit Test
-
 ![](https://github.com/Blackdeathanton/gatorexchange/blob/master/resources/images/backend/Tests.gif)
 
 ## Others
